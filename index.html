@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://locfuiteeau.fr/">
+<title>LOC FUITE EAU — Recherche de fuite d'eau non destructive à Lormont et en Gironde</title>
+<meta name="description" content="LOC FUITE EAU, recherche et localisation de fuites d'eau non destructive à Lormont et dans toute la Gironde : détection, caméra d'inspection, rapport. Appelez le 06 70 15 09 04.">
+<meta property="og:title" content="LOC FUITE EAU — Recherche de fuite non destructive">
+<meta property="og:description" content="Votre fuite d'eau trouvée au centimètre, sans tout casser. Lormont et toute la Gironde.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://locfuiteeau.fr/">
+<meta property="og:image" content="https://locfuiteeau.fr/img/technicien.webp">
+<meta property="og:locale" content="fr_FR">
+<meta name="theme-color" content="#08204A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1D44'/%3E%3Cpath d='M32 12c-8 9.6-12 16-12 21a12 12 0 0 0 24 0c0-5-4-11.4-12-21z' fill='%232D7CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Plumber","name":"LOC FUITE EAU","url":"https://locfuiteeau.fr/","image":"https://locfuiteeau.fr/img/technicien.webp","description":"Recherche et localisation de fuites d'eau non destructive","telephone":"+33670150904","email":"Locfuite.eau@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Lormont","postalCode":"33310","addressCountry":"FR"},"areaServed":"Gironde","openingHours":"Mo-Sa 08:00-18:00","makesOffer":{"@type":"Offer","itemOffered":{"@type":"Service","name":"Recherche de fuite d'eau non destructive"},"price":"380","priceCurrency":"EUR"}}
+</script>
+<style>
+  /* Ambiance « eau de jour et de nuit » : fond bleu océan, une bande bleu vif, une section claire couleur glace,
+     reliées par des bords en vague ; des lueurs d'eau dérivent lentement derrière la page. */
+  :root {
+    color-scheme: dark;
+    --bg: #08204A; --bg-mid: #0C2A5E; --bg-ice: #EEF4FF;
+    --panel: #0F2F66; --panel-2: #133874;
+    --line: rgba(160,195,255,.16); --line-2: rgba(160,195,255,.28);
+    --text: #EEF4FF; --muted: #A9BEE0; --dim: #7E95BE;
+    --blue: #2D7CFF; --blue-2: #66A9FF; --blue-3: #A9CCFF; --ice: #DCEAFF;
+    --brand-1: #1F5FD6; --brand-2: #2D7CFF;
+    --hot: #FF7A45; --hot-2: #FFB08F; --ok: #3DDC97; --gold: #FFC34D;
+    --ink: #0B1D44; --white: #FFFFFF; --shade: rgba(6,20,48,.84);
+    --f-display: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+    --f-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --maxw: 1180px;
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; color: var(--text); background: var(--bg); font: 16px/1.6 var(--f-body); overflow-x: hidden; overflow-x: clip; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--f-display); letter-spacing: -.02em; line-height: 1.1; margin: 0; text-wrap: balance; }
+  .wrap { width: min(var(--maxw), 100% - 32px); margin-inline: auto; }
+  section { padding-block: 88px; position: relative; }
+  main section[id], #resultat { scroll-margin-top: 72px; }
+  .i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  :focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; }
+
+  /* Lueurs d'eau derrière la page */
+  .ambient { position: fixed; inset: -12%; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(38% 32% at 18% 22%, rgba(45,124,255,.26), transparent 70%),
+      radial-gradient(34% 30% at 84% 64%, rgba(102,169,255,.16), transparent 70%),
+      radial-gradient(30% 26% at 58% 8%, rgba(31,95,214,.22), transparent 70%);
+    animation: drift 26s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate3d(5%, -4%, 0) scale(1.08); } }
+  .demo-bar, main, footer { position: relative; z-index: 1; }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue-2); }
+  .eyebrow::before { content: ""; width: 20px; height: 2px; border-radius: 2px; background: currentColor; }
+  h2 { font-size: clamp(30px, 4vw, 46px); }
+  .lead { color: var(--muted); font-size: clamp(16px, 1.6vw, 18px); max-width: 60ch; margin: 0; }
+  .head { max-width: 760px; margin-bottom: 44px; }
+  .head h2 { margin: 14px 0 16px; }
+  .head-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: end; margin-bottom: 40px; }
+  .head-split h2 { margin-top: 14px; }
+
+  /* Titres qui montent mot à mot (seulement ceux qu'on n'a pas encore vus) */
+  .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+  .w > span { display: inline-block; transition: transform .8s var(--ease); transition-delay: calc(var(--i) * 45ms); }
+  h2.pre .w > span { transform: translateY(110%); }
+
+  /* Sections de couleur, reliées par des bords en vague */
+  .sec-mid { --sec: var(--bg-mid); background: var(--sec); }
+  .sec-ice {
+    --sec: var(--bg-ice);
+    --text: #0B1D44; --muted: #4A5B7E; --dim: #6A7A99;
+    --line: rgba(11,29,68,.10); --line-2: rgba(11,29,68,.18);
+    --panel: #FFFFFF; --panel-2: #F4F8FF;
+    --blue-2: #1F65E6; --ok: #0E9F62; --gold: #B7791F; --hot: #E5602A;
+    background: var(--sec); color: var(--text);
+  }
+  .sec-mid::before, .sec-mid::after, .sec-ice::before, .sec-ice::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 26px; background: var(--sec); pointer-events: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 26'%3E%3Cpath d='M0 13C40 0 80 0 120 13S200 26 240 13V26H0Z'/%3E%3C/svg%3E") 0 0 / 240px 26px repeat-x;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 26'%3E%3Cpath d='M0 13C40 0 80 0 120 13S200 26 240 13V26H0Z'/%3E%3C/svg%3E") 0 0 / 240px 26px repeat-x;
+    animation: wavex 9s linear infinite;
+  }
+  .sec-mid::before, .sec-ice::before { top: -25px; }
+  .sec-mid::after, .sec-ice::after { bottom: -25px; transform: scaleY(-1); animation-direction: reverse; }
+  @keyframes wavex { to { -webkit-mask-position: 240px 0; mask-position: 240px 0; } }
+
+  /* Bandeau version de travail + en-tête */
+  .demo-bar { background: var(--ink); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12.5px; text-align: center; padding: 7px 16px; }
+  header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(8,32,74,.72); -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px); transition: background .3s; }
+  header.top.scrolled { background: rgba(8,32,74,.92); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font: 800 18px/1 var(--f-display); letter-spacing: -.01em; white-space: nowrap; }
+  .brand svg { width: 36px; height: 36px; flex: none; transition: transform .5s var(--ease); }
+  .brand:hover svg { transform: rotate(-8deg) scale(1.06); }
+  .brand b { color: var(--blue-2); }
+  .menu { display: flex; gap: 6px; font-size: 14.5px; color: var(--muted); }
+  .menu a { position: relative; text-decoration: none; padding: 8px 11px; border-radius: 10px; transition: color .2s, background .2s; }
+  .menu a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+  .menu a.on { color: var(--text); }
+  .menu a.on::after { content: ""; position: absolute; left: 11px; right: 11px; bottom: 3px; height: 2px; border-radius: 2px; background: var(--blue-2); }
+  .nav .btn { padding: 12px 16px; font-size: 14.5px; }
+  /* Le fil d'eau : une canalisation qui se remplit avec le défilement */
+  .pipe { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--line); pointer-events: none; }
+  .pipe .water { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--blue), var(--blue-2)); }
+  .pipe .drop { position: absolute; left: -4px; top: -3px; width: 8px; height: 8px; border-radius: 50% 50% 50% 0; background: var(--blue-3); rotate: -45deg; }
+  html.static .pipe { display: none; }
+
+  /* Boutons : l'eau monte au survol, l'icône réagit, des ondes au clic */
+  .btn {
+    --mx: 0px; --my: 0px; --sc: 1; --fill: rgba(255,255,255,.18);
+    position: relative; isolation: isolate; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 22px; border-radius: 14px; border: 1px solid transparent;
+    font: 600 15.5px/1 var(--f-body); color: var(--text); text-decoration: none; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+    transform: translate(var(--mx), var(--my)) scale(var(--sc));
+    transition: transform .3s var(--ease), border-color .3s, color .3s, box-shadow .3s;
+  }
+  .btn::before {
+    content: ""; position: absolute; z-index: -1; left: 50%; top: 100%;
+    width: 280%; aspect-ratio: 1; translate: -50% 0;
+    border-radius: 40% 45% 42% 38%; background: var(--fill);
+    transition: top .75s var(--ease);
+    animation: spin 6s linear infinite; animation-play-state: paused;
+  }
+  .btn:hover::before, .btn:focus-visible::before { top: -95%; animation-play-state: running; }
+  .btn:active { --sc: .96; }
+  .btn:active::before { top: -95%; transition-duration: .3s; }
+  @keyframes spin { to { rotate: 360deg; } }
+  .btn .i { transition: transform .35s var(--ease); }
+  .btn:hover .i-arrow { transform: translateX(5px); }
+  .btn .i-phone { transform-origin: 50% 50%; }
+  .btn:hover .i-phone { animation: ring .8s ease; }
+  .btn.ring .i-phone { animation: ring-loop 6s ease-in-out 2.5s infinite; }
+  .btn.ring:hover .i-phone { animation: ring .8s ease; }
+  @keyframes ring { 0%, 100% { rotate: 0deg; } 15% { rotate: -16deg; } 30% { rotate: 14deg; } 45% { rotate: -10deg; } 60% { rotate: 8deg; } 75% { rotate: -4deg; } }
+  @keyframes ring-loop { 0%, 14%, 100% { rotate: 0deg; } 2% { rotate: -16deg; } 4% { rotate: 14deg; } 6% { rotate: -10deg; } 8% { rotate: 8deg; } 10% { rotate: -4deg; } }
+  .btn-primary { background: linear-gradient(180deg, #3B87FF, #1F65E6); color: var(--white); --fill: #62A8FF; box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 14px 28px -14px rgba(0,10,40,.8); }
+  .btn-primary:hover { box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 18px 30px -14px rgba(45,124,255,.6); }
+  .btn-ghost { background: rgba(255,255,255,.05); border-color: var(--line-2); --fill: rgba(45,124,255,.28); }
+  .btn-ghost:hover { border-color: var(--blue-2); }
+  .btn-white { background: var(--white); color: var(--ink); --fill: var(--ice); }
+  .btn-glass { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28); color: var(--white); --fill: rgba(255,255,255,.22); }
+  .btn.sm { padding: 11px 15px; font-size: 14px; border-radius: 11px; }
+  .ripple { position: absolute; z-index: 1; border-radius: 50%; border: 2px solid rgba(255,255,255,.6); translate: -50% -50%; scale: 0; animation: rip .75s ease-out forwards; pointer-events: none; }
+  .ripple.r2 { animation-delay: .14s; border-width: 1.5px; }
+  @keyframes rip { to { scale: 1; opacity: 0; } }
+
+  /* Accueil */
+  .hero { padding-block: 56px 72px; }
+  .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 60px; align-items: center; }
+  .hero h1 { font-size: clamp(38px, 5.4vw, 66px); margin: 20px 0 22px; }
+  .hero h1 .accent { background: linear-gradient(90deg, var(--blue-3), var(--blue-2) 45%, var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero .lead { margin-bottom: 32px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .trust { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 30px; color: var(--muted); font-size: 14px; }
+  .trust span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust .i { width: 17px; height: 17px; color: var(--blue-2); }
+  .stars { color: var(--gold); letter-spacing: 1px; }
+
+  .visual { perspective: 1400px; }
+  .card3d { position: relative; aspect-ratio: 4 / 3; max-width: 100%; transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .6s var(--ease); }
+  .card3d .ph { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; background: linear-gradient(135deg, var(--panel-2), var(--bg)); border: 1px solid var(--line-2); box-shadow: 0 50px 90px -40px rgba(0,8,30,.9); cursor: crosshair; }
+  .card3d .ph img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08) translate(var(--px, 0px), var(--py, 0px)); transition: transform .6s var(--ease); }
+  .card3d .ph::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(8,32,74,0) 50%, rgba(8,32,74,.5)); pointer-events: none; }
+  .scan { position: absolute; left: 0; right: 0; height: 30%; top: -30%; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(120,180,255,.08) 85%, rgba(170,210,255,.38) 99%, transparent); animation: scan 6s cubic-bezier(.5,0,.5,1) infinite; }
+  @keyframes scan { 0% { top: -30%; } 65%, 100% { top: 105%; } }
+  .hr { position: absolute; z-index: 2; width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 50%; border: 1.5px solid rgba(200,225,255,.6); pointer-events: none; animation: hr 1.3s ease-out forwards; }
+  @keyframes hr { from { scale: .08; opacity: .95; } to { scale: 1; opacity: 0; } }
+  .target { position: absolute; left: 59%; top: 74%; width: 62px; height: 62px; transform: translate(-50%, -50%) translateZ(30px); z-index: 3; pointer-events: none; }
+  .target::before, .target::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255,122,69,.9); }
+  .target::after { animation: ping 2.4s ease-out infinite; }
+  .target i { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--hot); }
+  @keyframes ping { 0% { transform: scale(.5); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+  .chip { position: absolute; z-index: 4; display: flex; align-items: center; gap: 11px; padding: 10px 15px 10px 10px; border-radius: 15px; background: rgba(8,28,66,.82); border: 1px solid var(--line-2); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); font-size: 13.5px; font-weight: 600; line-height: 1.25; box-shadow: 0 22px 40px -20px rgba(0,8,30,.85); transform: translateZ(70px); white-space: nowrap; animation: float 7s ease-in-out infinite; }
+  .chip small { display: block; color: var(--muted); font-size: 11.5px; font-weight: 500; }
+  .chip .ico { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: rgba(45,124,255,.22); color: var(--blue-2); }
+  .chip .ico .i { width: 17px; height: 17px; }
+  .chip.hot .ico { background: rgba(255,122,69,.16); color: var(--hot); }
+  .c1 { top: 22px; left: -28px; }
+  .c2 { top: 40%; right: -30px; animation-delay: -2.4s; }
+  .c3 { bottom: 26px; left: -20px; animation-delay: -4.6s; }
+  @keyframes float { 50% { translate: 0 -7px; } }
+
+  /* Bandeau bleu vif, piloté par la vitesse de défilement */
+  .band { position: relative; z-index: 1; overflow: hidden; background: linear-gradient(90deg, var(--brand-1), var(--brand-2) 50%, var(--brand-1)); padding-block: 20px; color: var(--white); }
+  .track { display: flex; align-items: center; width: max-content; will-change: transform; }
+  .track span { font: 800 clamp(26px, 4vw, 44px)/1.05 var(--f-display); letter-spacing: -.02em; padding-inline: 24px; white-space: nowrap; }
+  .track span.o { color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.9); }
+  .track svg { width: 20px; height: 26px; flex: none; color: rgba(255,255,255,.75); }
+
+  /* Le détecteur */
+  .det-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 60px; align-items: center; }
+  .device { background: linear-gradient(180deg, var(--panel-2), var(--bg)); border: 1px solid var(--line-2); border-radius: 26px; padding: 14px; box-shadow: 0 50px 90px -40px rgba(0,8,30,.9); }
+  .dev-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 4px 6px 12px; font: 600 11.5px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .rec { display: inline-flex; align-items: center; gap: 8px; }
+  .rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: blink 1.4s steps(2) infinite; }
+  .found .rec::before { background: var(--hot); animation: none; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .field { position: relative; aspect-ratio: 4 / 3; max-width: 100%; border-radius: 16px; overflow: hidden; cursor: crosshair; touch-action: pan-y; user-select: none; -webkit-user-select: none; background: var(--panel); }
+  .ground { position: absolute; inset: 0; background: url("img/allee-apres.webp") 50% 100% / 150% auto no-repeat; }
+  .field > .ground { filter: saturate(.85) brightness(.92); }
+  .xray { position: absolute; inset: 0; clip-path: circle(80px at 50% 50%); }
+  .found .xray { transition: clip-path 1s var(--ease); }
+  .xray .ground { filter: grayscale(1) brightness(.3) contrast(1.35); }
+  .xray .tint { position: absolute; inset: 0; background-color: rgba(18,60,150,.42); background-image: linear-gradient(rgba(93,163,255,.13) 1px, transparent 1px), linear-gradient(90deg, rgba(93,163,255,.13) 1px, transparent 1px); background-size: 26px 26px; }
+  .xray svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .flow { animation: flow 1.2s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -20; } }
+  .hotc { transform-box: fill-box; transform-origin: center; animation: throb 1.6s ease-in-out infinite; }
+  @keyframes throb { 50% { transform: scale(1.18); } }
+  .probe { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; z-index: 3; }
+  .probe::before { content: ""; position: absolute; width: 46px; height: 46px; left: -23px; top: -23px; border-radius: 50%; border: 2px solid rgba(220,235,255,.95); box-shadow: 0 0 0 1px rgba(6,15,34,.4); transform: scale(var(--s, 1)); }
+  .probe::after { content: ""; position: absolute; width: 18px; height: 18px; left: -9px; top: -9px; background: linear-gradient(rgba(220,235,255,.95), rgba(220,235,255,.95)) center / 2px 100% no-repeat, linear-gradient(rgba(220,235,255,.95), rgba(220,235,255,.95)) center / 100% 2px no-repeat; }
+  .found .probe { opacity: 0; transition: opacity .4s; }
+  .hint { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 4; padding: 9px 15px; border-radius: 999px; background: var(--shade); border: 1px solid var(--line-2); font-size: 13px; font-weight: 500; white-space: nowrap; transition: opacity .4s; pointer-events: none; }
+  .hint.hide { opacity: 0; }
+  .pin { position: absolute; z-index: 4; width: 0; height: 0; opacity: 0; transition: opacity .4s .5s; }
+  .pin::before { content: ""; position: absolute; width: 34px; height: 34px; left: -17px; top: -17px; border-radius: 50%; border: 2px solid var(--hot); background: rgba(255,122,69,.15); }
+  .pin::after { content: "Fuite"; position: absolute; left: 22px; top: -13px; padding: 4px 9px; border-radius: 8px; background: var(--hot); color: var(--white); font: 700 12px/1.2 var(--f-body); }
+  .found .pin { opacity: 1; }
+  .found-msg { display: flex; align-items: center; justify-content: space-between; gap: 14px; max-height: 0; overflow: hidden; margin-top: 0; padding: 0 12px 0 16px; border-radius: 14px; background: rgba(255,122,69,.08); border: 1px solid transparent; font-size: 14px; line-height: 1.35; opacity: 0; pointer-events: none; transition: max-height .5s .4s, margin .5s .4s, padding .5s .4s, opacity .4s .6s, border-color .4s .6s; }
+  .found-msg strong { color: var(--hot-2); }
+  .found .found-msg { max-height: 140px; margin-top: 12px; padding: 12px 12px 12px 16px; border-color: rgba(255,122,69,.4); opacity: 1; pointer-events: auto; }
+  .hud { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; padding: 16px 8px 6px; }
+  .bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; }
+  .bars i { width: 6px; height: calc(8px + var(--i) * 2.6px); border-radius: 2px; background: rgba(160,195,255,.2); transition: background .15s; }
+  .bars i.on { background: var(--blue-2); }
+  .bars i.h { background: var(--hot); }
+  .wave { width: 100%; height: 48px; }
+  .wave polyline { fill: none; stroke: var(--blue-2); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .found .wave polyline { stroke: var(--hot); }
+  .read { text-align: right; min-width: 92px; font-variant-numeric: tabular-nums; }
+  .read small { display: block; color: var(--muted); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+  .read b { display: block; font: 800 24px/1.15 var(--f-display); }
+  .checks { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 12px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; }
+  .checks .i { color: var(--blue-2); margin-top: 3px; }
+
+  /* Méthode : un écran qui suit la lecture (au défilement sur grand écran, en lecture auto ailleurs) */
+  .meth { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .screen-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 104px); z-index: 2; }
+  html.auto .screen-wrap { position: static; }
+  .screen { background: linear-gradient(180deg, var(--panel-2), var(--bg)); border: 1px solid var(--line-2); border-radius: 24px; padding: 14px; box-shadow: 0 40px 80px -40px rgba(0,8,30,.9); }
+  .scr-top { display: flex; justify-content: space-between; gap: 12px; padding: 4px 6px 12px; font: 600 11.5px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .scr-top b { color: var(--text); }
+  .scr-body { position: relative; aspect-ratio: 4 / 3; max-width: 100%; border-radius: 14px; overflow: hidden; background: #061A3E; background-image: linear-gradient(rgba(102,169,255,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(102,169,255,.09) 1px, transparent 1px); background-size: 28px 28px; }
+  .pane { position: absolute; inset: 0; display: grid; place-items: center; padding: 22px; opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .45s, transform .55s var(--ease); }
+  .screen[data-step="0"] .p0, .screen[data-step="1"] .p1, .screen[data-step="2"] .p2, .screen[data-step="3"] .p3 { opacity: 1; transform: none; }
+  .scr-dots { display: flex; gap: 6px; padding: 14px 6px 4px; }
+  .scr-dots i { flex: 1; height: 3px; border-radius: 3px; background: var(--line-2); transition: background .4s; }
+  .screen[data-step="0"] .scr-dots i:nth-child(-n+1), .screen[data-step="1"] .scr-dots i:nth-child(-n+2), .screen[data-step="2"] .scr-dots i:nth-child(-n+3), .screen[data-step="3"] .scr-dots i { background: var(--blue-2); }
+  .chk { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; width: min(320px, 100%); }
+  .chk li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid var(--line); font-weight: 500; }
+  .chk .i { color: var(--ok); }
+  .screen.anim[data-step="0"] .chk li { animation: li .55s var(--ease) both; animation-delay: calc(var(--i) * .16s + .1s); }
+  @keyframes li { from { opacity: 0; transform: translateX(-14px); } }
+  .tagline { position: absolute; left: 18px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: var(--shade); border: 1px solid var(--line-2); font-size: 13px; font-weight: 600; }
+  .tagline .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue-2); }
+  .tagline .dot.hot { background: var(--hot); }
+  .sig { width: 100%; max-width: 420px; }
+  .sig path { fill: none; stroke: var(--blue-2); stroke-width: 2.5; stroke-linejoin: round; }
+  .screen.anim[data-step="1"] .sig path { stroke-dasharray: 760; stroke-dashoffset: 760; animation: draw 2.4s var(--ease) .15s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .map { width: 100%; max-width: 440px; overflow: visible; }
+  .map .mp { fill: none; stroke: var(--blue-3); stroke-width: 7; stroke-linecap: round; opacity: .85; }
+  .map .mpin { fill: var(--hot); }
+  .map .mring { fill: none; stroke: var(--hot); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ping 2s ease-out infinite; }
+  .doc { width: min(300px, 100%); background: var(--ice); color: var(--ink); border-radius: 12px; padding: 16px 18px; box-shadow: 0 24px 40px -20px rgba(0,8,30,.8); rotate: -2deg; font-size: 13px; }
+  .doc-h { display: flex; align-items: center; gap: 9px; padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid rgba(11,29,68,.15); }
+  .doc-h svg { width: 26px; height: 26px; }
+  .doc-h b { font: 800 14px/1.2 var(--f-display); }
+  .doc-row { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(11,29,68,.15); }
+  .doc-row span { color: #4A5B7E; }
+  .doc-row b.ok { color: #0E8A57; }
+  .doc-lines { display: grid; gap: 6px; margin-top: 10px; }
+  .doc-lines i { display: block; height: 6px; border-radius: 3px; background: rgba(11,29,68,.12); }
+  .msteps { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; }
+  .msteps::before, .msteps::after { content: ""; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; border-radius: 2px; }
+  .msteps::before { background: var(--line-2); }
+  .msteps::after { background: linear-gradient(180deg, var(--blue), var(--blue-2)); transform-origin: 50% 0; transform: scaleY(var(--fill, 0)); }
+  html.auto .msteps::after { transition: transform .6s var(--ease); }
+  .mstep { position: relative; min-height: 40vh; display: flex; flex-direction: column; justify-content: center; padding-block: 24px; opacity: .4; transition: opacity .45s; }
+  html.auto .mstep { min-height: 0; padding-block: 16px; cursor: pointer; }
+  .mstep::before { content: ""; position: absolute; left: -31px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--sec, var(--bg)); border: 2px solid var(--line-2); z-index: 1; transition: background .4s, border-color .4s, scale .4s; }
+  .mstep.on { opacity: 1; }
+  .mstep.on::before, .mstep.past::before { background: var(--blue-2); border-color: var(--blue-2); }
+  .mstep.on::before { scale: 1.3; }
+  .mstep .k { display: block; font: 700 11.5px/1 var(--f-body); letter-spacing: .16em; color: var(--blue-2); margin-bottom: 12px; }
+  .mstep h3 { font-size: clamp(22px, 2.6vw, 32px); margin-bottom: 10px; }
+  .mstep p { color: var(--muted); margin: 0; max-width: 46ch; }
+
+  /* Services : liste à survoler, la photo suit le curseur */
+  .svc-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+  .row { position: relative; display: grid; grid-template-columns: 52px minmax(0, 1.1fr) minmax(0, 1fr) 44px; align-items: center; column-gap: 24px; row-gap: 0; padding: 28px 8px; border-top: 1px solid var(--line); cursor: default; outline-offset: -2px; }
+  .row::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition: transform .7s var(--ease); z-index: 1; }
+  .row:hover::after, .row.open::after { transform: scaleX(1); }
+  .row .ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(45,124,255,.16); color: var(--blue-2); transition: background .4s, color .4s, rotate .5s var(--ease); }
+  .row:hover .ic, .row.open .ic { background: var(--blue); color: var(--white); rotate: -8deg; }
+  .row h3 { font-size: clamp(21px, 2.4vw, 30px); transition: transform .5s var(--ease), color .4s; }
+  .row:hover h3 { transform: translateX(10px); color: var(--blue-3); }
+  .row p { color: var(--muted); margin: 0; font-size: 15px; }
+  .row .go { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: background .4s, border-color .4s, rotate .5s var(--ease); }
+  .row:hover .go { background: var(--blue); border-color: var(--blue); rotate: -45deg; }
+  .row-img { grid-column: 1 / -1; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
+  .row-img > div { overflow: hidden; min-height: 0; }
+  .row-img img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 16px; margin-top: 16px; background: var(--panel); }
+  .row.open .row-img { grid-template-rows: 1fr; }
+  .row.open .go { rotate: 90deg; background: var(--blue); border-color: var(--blue); }
+  .svc-float { position: fixed; left: 0; top: 0; z-index: 40; width: 300px; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; pointer-events: none; opacity: 0; scale: .7; border: 1px solid var(--line-2); box-shadow: 0 30px 60px -20px rgba(0,8,30,.8); transition: opacity .3s, scale .4s var(--ease); background: var(--panel); }
+  .svc-float.show { opacity: 1; scale: 1; }
+  .svc-float img { width: 100%; height: 100%; object-fit: cover; }
+  .svc-note { color: var(--dim); font-size: 13.5px; margin: 16px 0 0; }
+
+  /* Outil : le test de fuite (section claire) */
+  .test-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
+  .sym-list { display: grid; gap: 10px; }
+  .sym { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; padding: 17px 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font: 500 15.5px/1.35 var(--f-body); cursor: pointer; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .2s, background .2s, transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .sym:hover { border-color: var(--line-2); transform: translateX(4px); }
+  .sym:active { transform: scale(.98); }
+  .sym .sw { flex: none; width: 46px; height: 27px; border-radius: 999px; background: var(--line-2); position: relative; transition: background .25s; }
+  .sym .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: var(--white); box-shadow: 0 1px 3px rgba(11,29,68,.3); transition: transform .35s cubic-bezier(.3,1.5,.5,1), width .2s; }
+  .sym:active .sw::after { width: 26px; }
+  .sym .sw::before { content: ""; position: absolute; right: 2px; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 50%; border: 2px solid var(--blue); opacity: 0; pointer-events: none; }
+  .sym.pop .sw::before { animation: pop .6s ease-out; }
+  @keyframes pop { from { opacity: 1; scale: .6; } to { opacity: 0; scale: 2.2; } }
+  .sym[aria-pressed="true"] { border-color: rgba(45,124,255,.55); background: linear-gradient(180deg, rgba(45,124,255,.12), rgba(45,124,255,.04)), var(--panel); }
+  .sym[aria-pressed="true"] .sw { background: var(--blue); }
+  .sym[aria-pressed="true"] .sw::after { transform: translateX(19px); }
+  .sym[aria-pressed="true"]:active .sw::after { transform: translateX(14px); }
+  .live { display: none; }
+  .result { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line-2); border-radius: 22px; padding: 28px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); text-align: center; box-shadow: 0 30px 60px -36px rgba(11,29,68,.45); }
+  .gauge { width: min(260px, 100%); margin: 0 auto 6px; display: block; }
+  .g-track { stroke: var(--line-2); }
+  .needle line { stroke: var(--text); }
+  .needle circle { fill: var(--text); }
+  #needle { transform-box: view-box; transform-origin: 110px 110px; transition: transform .7s cubic-bezier(.3,1.4,.5,1); }
+  #arc { transition: stroke-dashoffset .7s var(--ease); }
+  .lvl { display: inline-block; padding: 5px 12px; border-radius: 999px; font: 700 12px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; background: rgba(14,159,98,.12); color: var(--ok); }
+  .lvl[data-l="low"] { background: rgba(45,124,255,.12); color: var(--blue-2); }
+  .lvl[data-l="mid"] { background: rgba(255,195,77,.18); color: var(--gold); }
+  .lvl[data-l="high"] { background: rgba(255,122,69,.14); color: var(--hot); }
+  .result h3 { font-size: 24px; margin: 14px 0 10px; }
+  .result p { color: var(--muted); font-size: 15px; margin: 0 0 22px; }
+  .meter { margin-top: 56px; }
+  .meter h3 { font-size: 22px; margin-bottom: 18px; }
+  .meter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ms { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .3s, transform .4s var(--ease); }
+  .ms:hover { border-color: var(--line-2); transform: translateY(-4px); }
+  .ms .n { font: 800 13px/1 var(--f-display); color: var(--blue-2); letter-spacing: .1em; }
+  .ms h4 { font: 700 17px/1.25 var(--f-display); margin: 10px 0 6px; }
+  .ms p { color: var(--muted); font-size: 14.5px; margin: 0; }
+
+  /* Chantiers */
+  .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .ch { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+  .ch .stage { position: relative; aspect-ratio: 1 / 1; max-width: 100%; overflow: hidden; background: linear-gradient(135deg, var(--panel-2), var(--bg)); }
+  .ch .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity .8s ease, transform 1.6s var(--ease); }
+  .ch .stage img.on { opacity: 1; transform: none; }
+  .ch .lab { position: absolute; top: 14px; left: 14px; z-index: 3; padding: 6px 12px; border-radius: 999px; background: var(--shade); border: 1px solid var(--line-2); font: 700 12px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; }
+  .tabs-wrap { padding: 18px 20px 0; }
+  .tabs { position: relative; display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
+  .tabs .ind { position: absolute; left: 0; top: 4px; bottom: 4px; width: 0; border-radius: 999px; background: var(--blue); transition: transform .5s var(--ease), width .5s var(--ease); }
+  .tab { position: relative; z-index: 1; padding: 9px 16px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); font: 600 13.5px/1 var(--f-body); cursor: pointer; transition: color .3s; -webkit-tap-highlight-color: transparent; }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] { color: var(--white); }
+  .ch .cap { padding: 14px 20px 22px; }
+  .ch .cap h3 { font-size: 18px; margin-bottom: 6px; }
+  .ch .cap p { color: var(--muted); margin: 0; font-size: 15px; min-height: 2.9em; }
+
+  /* Avis */
+  .rev-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .rev-head .head { margin-bottom: 0; }
+  .score { display: flex; align-items: center; gap: 18px; padding: 18px 22px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); text-decoration: none; transition: border-color .25s, transform .4s var(--ease); }
+  .score:hover { border-color: var(--blue-2); transform: translateY(-3px); }
+  .score b { font: 800 54px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+  .score span { color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .score .stars { font-size: 18px; display: block; color: var(--gold); }
+  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start; }
+  .rev { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 26px; display: flex; flex-direction: column; gap: 16px; transition: border-color .3s; }
+  .rev:hover { border-color: var(--line-2); }
+  .rev:nth-child(2) { margin-top: 48px; }
+  .rev q { quotes: "« " " »"; font-size: 16.5px; line-height: 1.6; }
+  .rev .who { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+  .rev .who strong { color: var(--text); display: block; }
+  .av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--blue), var(--blue-2)); color: var(--white); font-weight: 700; flex: none; }
+  .swipe-hint { display: none; color: var(--dim); font-size: 13px; margin: 12px 0 0; }
+
+  /* FAQ */
+  .faq { max-width: 880px; margin-top: 88px; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 0; font: 700 18.5px/1.35 var(--f-display); transition: color .25s, padding .35s var(--ease); }
+  .faq summary:hover { color: var(--blue-3); padding-left: 8px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .pm { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: transform .4s var(--ease), background .3s, border-color .3s; }
+  .pm .i { width: 16px; height: 16px; }
+  .faq summary:hover .pm { border-color: var(--blue-2); }
+  .faq details[open] .pm { transform: rotate(45deg); background: var(--blue); border-color: var(--blue); }
+  .faq .ans { color: var(--muted); padding: 0 0 24px; max-width: 70ch; overflow: hidden; }
+  .faq .ans p { margin: 0; }
+  .faq .ans small { display: block; margin-top: 10px; color: var(--dim); font-size: 13px; }
+
+  /* Contact */
+  .ct-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 24px; align-items: start; }
+  .ct-card { position: relative; overflow: hidden; border-radius: 26px; padding: 36px; background: linear-gradient(160deg, #2A6BEA 0%, #1748B8 50%, #0E2F86 100%); }
+  .ct-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-radial-gradient(circle at 105% 108%, transparent 0 30px, rgba(255,255,255,.06) 31px 32px); }
+  .ct-card > * { position: relative; z-index: 1; }
+  .status { display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 13.5px; font-weight: 500; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+  .status.open::before { background: var(--ok); }
+  .ct-card h2 { margin: 22px 0 6px; }
+  .big-tel { display: inline-flex; gap: .28em; margin: 6px 0 22px; font: 800 clamp(30px, 3.6vw, 42px)/1.1 var(--f-display); letter-spacing: -.01em; text-decoration: none; user-select: all; }
+  .big-tel span { display: inline-block; transition: transform .35s var(--ease); }
+  .big-tel:hover span { transform: translateY(-5px); }
+  .big-tel:hover span:nth-child(2) { transition-delay: .04s; } .big-tel:hover span:nth-child(3) { transition-delay: .08s; } .big-tel:hover span:nth-child(4) { transition-delay: .12s; } .big-tel:hover span:nth-child(5) { transition-delay: .16s; }
+  .ct-list { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 14px; }
+  .ct-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--ice); }
+  .ct-list .i { margin-top: 2px; color: var(--white); }
+  .ct-list a { text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.35); }
+  .ct-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .form { background: var(--panel); border: 1px solid var(--line); border-radius: 26px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: start; }
+  .form h3 { grid-column: 1 / -1; font-size: 22px; }
+  .form label { display: grid; gap: 7px; font-size: 13.5px; color: var(--muted); font-weight: 500; min-width: 0; }
+  .form .full { grid-column: 1 / -1; }
+  .form input, .form select, .form textarea { width: 100%; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--line-2); background: #0A2556; color: var(--text); font: 16px/1.4 var(--f-body); outline: none; transition: border-color .2s, box-shadow .2s; }
+  .form input:hover, .form select:hover, .form textarea:hover { border-color: rgba(160,195,255,.42); }
+  .form input:focus, .form select:focus, .form textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(45,124,255,.28); }
+  .form select option { background: #0A2556; }
+  .form textarea { min-height: 112px; resize: vertical; }
+  .form .note { grid-column: 1 / -1; font-size: 12.5px; color: var(--dim); margin: 0; }
+  .form .hp { display: none; }
+  .form button[disabled] { opacity: .7; cursor: progress; }
+  .form-err { grid-column: 1 / -1; margin: 0; padding: 12px 14px; border-radius: 12px; font-size: 14px; color: var(--hot-2); background: rgba(255,122,69,.1); border: 1px solid rgba(255,122,69,.35); }
+  .form-err a { color: var(--white); font-weight: 600; }
+  .form.shake { animation: shake .4s; }
+  @keyframes shake { 20%, 60% { translate: -6px 0; } 40%, 80% { translate: 6px 0; } }
+  .sent { grid-column: 1 / -1; display: none; text-align: center; padding: 26px 8px; }
+  .sent .ok-ic { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; background: rgba(61,220,151,.14); color: var(--ok); }
+  .sent .ok-ic .i { width: 30px; height: 30px; stroke-width: 2.4; }
+  .sent h3 { margin-bottom: 8px; }
+  .sent p { color: var(--muted); margin: 0 auto 20px; max-width: 42ch; }
+  .form.done > :not(.sent) { display: none; }
+  .form.done .sent { display: block; }
+
+  /* Pied de page */
+  footer { border-top: 1px solid var(--line); padding-block: 44px; color: var(--muted); font-size: 14px; background: rgba(6,24,58,.6); }
+  .ft { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
+  .ft p { margin: 8px 0 0; }
+  .ft a { text-decoration: none; transition: color .2s; }
+  .ft a:hover { color: var(--text); }
+  .ft .demo { color: var(--dim); font-size: 12.5px; margin-top: 26px; grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 20px; }
+
+  /* Barre d'action sur téléphone */
+  /* Tarifs : une carte par prestation, le prix en bas de carte */
+  .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .price-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 20px; background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); transition: border-color .3s, transform .4s var(--ease), box-shadow .4s; }
+  .price-card:hover { border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(45,124,255,.6); }
+  .price-card .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(45,124,255,.16); color: var(--blue-2); }
+  .price-card h3 { font-size: 18px; line-height: 1.25; }
+  .price-card p { color: var(--muted); font-size: 14.5px; margin: 0; flex: 1; }
+  .price-card .amount { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+  .price-card .amount small { color: var(--dim); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .price-card .amount strong { font: 800 28px/1.1 var(--f-display); color: var(--white); }
+  .price-card .amount strong.tbd { font-size: 17px; font-weight: 700; color: var(--blue-3); }
+  .price-card.main { border-color: rgba(102,169,255,.5); box-shadow: 0 18px 40px -26px rgba(45,124,255,.7); }
+  .price-foot { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+  .price-foot p { color: var(--dim); font-size: 13.5px; margin: 0; max-width: 60ch; }
+
+  .mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: none; gap: 10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(8,32,74,.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
+  .mbar .btn { flex: 1; padding: 15px 12px; }
+
+  @media (max-width: 1020px) {
+    .menu { display: none; }
+    .hero-grid, .det-grid, .test-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
+    .hero-grid { gap: 48px; }
+    .det-grid { gap: 36px; }
+    .det-grid .device { order: 2; }
+    .result { position: static; }
+    .visual { max-width: 640px; }
+    .meth { gap: 28px; }
+    .screen-wrap { max-width: 560px; }
+    .head-split { grid-template-columns: 1fr; }
+    .price-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 760px) {
+    section { padding-block: 64px; }
+    .hero { padding-block: 32px 56px; }
+    /* Sur téléphone, la photo est petite : on ne garde que « au centimètre près », en haut,
+       pour laisser voir le repère orange posé sur le point de fuite (les deux autres messages défilent juste en dessous) */
+    .c1, .c3 { display: none; }
+    .c2 { top: 12px; right: auto; left: 50%; transform: translateX(-50%) translateZ(70px); }
+    .chip { font-size: 12.5px; padding: 8px 12px 8px 8px; }
+    .chip .ico { width: 28px; height: 28px; }
+    .chip small { display: none; }
+    .band { padding-block: 14px; }
+    .screen { padding: 10px; border-radius: 20px; }
+    .scr-top { padding-bottom: 8px; }
+    .scr-body { aspect-ratio: 16 / 10; }
+    .scr-dots { padding-top: 10px; }
+    .pane { padding: 14px; }
+    .doc { font-size: 12px; padding: 12px 14px; }
+    .doc-lines { display: none; }
+    .chk { gap: 8px; }
+    .chk li { padding: 9px 12px; font-size: 14px; }
+    .row { grid-template-columns: 44px minmax(0, 1fr) 36px; column-gap: 14px; padding: 20px 2px; cursor: pointer; }
+    .row .ic { width: 44px; height: 44px; border-radius: 13px; }
+    .row p { grid-column: 2 / 4; grid-row: 2; font-size: 14.5px; margin-top: 6px; }
+    .row .go { width: 36px; height: 36px; grid-column: 3; grid-row: 1; }
+    .ch-grid, .meter-grid, .price-grid { grid-template-columns: 1fr; }
+    .price-card { padding: 20px; }
+    .rev-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; margin-inline: -16px; padding-inline: 16px; padding-bottom: 6px; scrollbar-width: none; }
+    .rev-grid::-webkit-scrollbar { display: none; }
+    .rev { flex: 0 0 84%; scroll-snap-align: center; }
+    .rev:nth-child(2) { margin-top: 0; }
+    .swipe-hint { display: block; }
+    .faq { margin-top: 64px; }
+    .live { display: flex; position: sticky; bottom: calc(env(safe-area-inset-bottom, 0px) + 86px); z-index: 5; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line-2); font-size: 14px; font-weight: 600; box-shadow: 0 18px 30px -16px rgba(11,29,68,.5); }
+    .live a { color: var(--blue-2); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
+    .form { grid-template-columns: 1fr; padding: 24px; }
+    .ct-card { padding: 28px 24px; }
+    .hud { gap: 12px; padding-inline: 4px; }
+    .read { min-width: 78px; }
+    .read b { font-size: 20px; }
+    .ft { grid-template-columns: 1fr; }
+    .mbar { display: flex; }
+    body { padding-bottom: 78px; }
+  }
+  @media (max-width: 420px) {
+    .nav .btn .long { display: none; }
+    .brand { font-size: 16px; }
+    .hint { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    h2.pre .w > span { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 64 64">
+    <path d="M7 31 32 9l25 22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 27v26h12" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="36" cy="38" r="12.5" fill="#0B1D44" stroke="#66A9FF" stroke-width="4.5"/>
+    <path d="m45 47 9.5 9.5" stroke="#66A9FF" stroke-width="6" stroke-linecap="round"/>
+    <path d="M36 29.5c-3.8 4.6-5.6 7.6-5.6 10a5.6 5.6 0 0 0 11.2 0c0-2.4-1.8-5.4-5.6-10z" fill="#2D7CFF"/>
+  </symbol>
+  <symbol id="logo-ink" viewBox="0 0 64 64">
+    <path d="M7 31 32 9l25 22" fill="none" stroke="#0B1D44" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 27v26h12" fill="none" stroke="#0B1D44" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="36" cy="38" r="12.5" fill="#DCEAFF" stroke="#2D7CFF" stroke-width="4.5"/>
+    <path d="m45 47 9.5 9.5" stroke="#2D7CFF" stroke-width="6" stroke-linecap="round"/>
+    <path d="M36 29.5c-3.8 4.6-5.6 7.6-5.6 10a5.6 5.6 0 0 0 11.2 0c0-2.4-1.8-5.4-5.6-10z" fill="#2D7CFF"/>
+  </symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+  <symbol id="ic-cam" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="m16 11 5-3v8l-5-3"/></symbol>
+  <symbol id="ic-doc" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="ic-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="ic-pipe" viewBox="0 0 24 24"><path d="M3 8h8a3 3 0 0 1 3 3v10M3 12h7v9"/><path d="M18 4s3 3.3 3 5.5a3 3 0 0 1-6 0C15 7.3 18 4 18 4z"/></symbol>
+  <symbol id="ic-drop" viewBox="0 0 20 26"><path d="M10 1C5 7.6 2 12.2 2 16a8 8 0 0 0 16 0c0-3.8-3-8.4-8-15z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="LOC FUITE EAU, accueil"><svg><use href="#logo"/></svg><span>LOC <b>FUITE</b> EAU</span></a>
+    <nav class="menu" aria-label="Sections">
+      <a href="#detecteur">Le détecteur</a>
+      <a href="#methode">Méthode</a>
+      <a href="#services">Services</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#test">Le test</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg><span>Appeler<span class="long"> · 06 70 15 09 04</span></span></a>
+  </div>
+  <div class="pipe" aria-hidden="true"><span class="water"></span><span class="drop"></span></div>
+</header>
+
+<main id="top">
+  <!-- Accueil -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Recherche de fuite non destructive · Gironde</span>
+        <h1>Votre fuite d'eau, trouvée au centimètre. <span class="accent">Sans tout casser.</span></h1>
+        <p class="lead">Détecter, localiser, accompagner : avec une caméra d'inspection et des appareils de détection non destructifs, on trouve l'origine exacte de la fuite avant d'ouvrir quoi que ce soit.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary ring" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Appeler le 06 70 15 09 04</a>
+          <a class="btn btn-ghost" href="#contact">Décrire mon problème<svg class="i i-arrow"><use href="#ic-arrow"/></svg></a>
+        </div>
+        <div class="trust">
+          <span><span class="stars">★★★★★</span> 5,0 sur Google</span>
+          <span><svg class="i"><use href="#ic-clock"/></svg>Lun – sam · 8h – 18h</span>
+          <span><svg class="i"><use href="#ic-pin"/></svg>Basé à Lormont</span>
+        </div>
+      </div>
+
+      <div class="visual" data-par="-0.05">
+        <div class="card3d" id="card3d">
+          <div class="ph" id="heroPh">
+            <img src="img/technicien.webp" width="1300" height="975" alt="Technicien LOC FUITE EAU en recherche de fuite dans un jardin, avec son détecteur" fetchpriority="high">
+            <div class="scan"></div>
+          </div>
+          <div class="target"><i></i></div>
+          <div class="chip c1"><span class="ico"><svg class="i"><use href="#ic-shield"/></svg></span><span>Sans destruction<small>On ne casse pas pour chercher</small></span></div>
+          <div class="chip hot c2"><span class="ico"><svg class="i"><use href="#ic-target"/></svg></span><span>Localisée au centimètre près<small>On n'ouvre qu'au bon endroit</small></span></div>
+          <div class="chip c3"><span class="ico"><svg class="i"><use href="#ic-doc"/></svg></span><span>Rapport d'intervention<small>Remis après la recherche</small></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true">
+    <div class="track" id="track">
+      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
+      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
+    </div>
+  </div>
+
+  <!-- Le détecteur interactif -->
+  <section id="detecteur">
+    <div class="wrap det-grid">
+      <div class="device">
+        <div class="dev-top"><span class="rec" id="detState">Écoute en cours</span><span>LFE · Détecteur</span></div>
+        <div class="field" id="field" aria-label="Jeu : déplacez le détecteur pour trouver la fuite cachée">
+          <div class="ground"></div>
+          <div class="xray">
+            <div class="ground"></div>
+            <div class="tint"></div>
+            <svg viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <radialGradient id="hotg">
+                  <stop offset="0" stop-color="#FF7A45" stop-opacity=".95"/>
+                  <stop offset=".45" stop-color="#FF7A45" stop-opacity=".42"/>
+                  <stop offset="1" stop-color="#FF7A45" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <g fill="none" stroke-linecap="round">
+                <path d="M150 168C146 120 132 70 118 -10" stroke="#5E8FD6" stroke-width="6" opacity=".75"/>
+                <path id="pipeMain" d="M-20 236C60 232 92 176 150 168S252 178 292 124S362 62 420 56" stroke="#8CC2FF" stroke-width="8"/>
+                <path class="flow" d="M-20 236C60 232 92 176 150 168S252 178 292 124S362 62 420 56" stroke="#E2EFFF" stroke-width="2" stroke-dasharray="4 16"/>
+              </g>
+              <circle id="hot" class="hotc" cx="200" cy="150" r="38" fill="url(#hotg)"/>
+            </svg>
+          </div>
+          <div class="probe" id="probe"></div>
+          <div class="pin" id="pin"></div>
+          <div class="hint" id="hint">Passez la souris ou touchez le terrain pour chercher</div>
+        </div>
+        <div class="found-msg"><span><strong>Fuite localisée.</strong> Au centimètre près, sans rien casser.</span><button class="btn btn-ghost sm" id="replay" type="button">Rejouer</button></div>
+        <div class="hud">
+          <div class="bars" id="bars"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i></div>
+          <svg class="wave" viewBox="0 0 200 56" preserveAspectRatio="none" aria-hidden="true"><polyline id="wave" points="0,28 200,28"/></svg>
+          <div class="read"><small>Signal</small><b id="sig">0 %</b><small id="dist">≈ — m</small></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="eyebrow">Essayez</span>
+        <h2 style="margin:14px 0 16px">Trouvez la fuite. Comme on le fait chez vous.</h2>
+        <p class="lead">Déplacez le détecteur sur le terrain : plus le signal monte, plus vous approchez. Sur un vrai chantier, c'est la même logique avec du matériel professionnel : on écoute, on mesure, et on resserre la zone jusqu'au point exact.</p>
+        <ul class="checks">
+          <li><svg class="i"><use href="#ic-check"/></svg><span>On n'ouvre qu'à un seul endroit : le bon.</span></li>
+          <li><svg class="i"><use href="#ic-check"/></svg><span>Moins de travaux, moins de remise en état à payer.</span></li>
+          <li><svg class="i"><use href="#ic-check"/></svg><span>Vous savez enfin d'où vient la fuite.</span></li>
+        </ul>
+        <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Faire chercher ma fuite</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Méthode -->
+  <section id="methode" class="sec-mid">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">La méthode</span>
+        <h2>Quatre étapes. Aucune démolition inutile.</h2>
+        <p class="lead">Détecter, localiser, accompagner : chaque intervention suit le même déroulé, du premier diagnostic jusqu'au rapport.</p>
+      </div>
+      <div class="meth">
+        <div class="screen-wrap">
+          <div class="screen" id="screen" data-step="0">
+            <div class="scr-top"><span class="rec">Étape <b id="scrN">1</b> sur 4</span><span id="scrName">Diagnostic</span></div>
+            <div class="scr-body">
+              <div class="pane p0">
+                <ul class="chk">
+                  <li style="--i:0"><svg class="i"><use href="#ic-check"/></svg>Vos constats</li>
+                  <li style="--i:1"><svg class="i"><use href="#ic-check"/></svg>Contrôle de l'installation</li>
+                  <li style="--i:2"><svg class="i"><use href="#ic-check"/></svg>Zone à examiner ciblée</li>
+                </ul>
+              </div>
+              <div class="pane p1">
+                <svg class="sig" viewBox="0 0 300 120" aria-hidden="true"><path d="M0 60L20 58L35 62L50 57L65 63L80 59L95 61L108 52L116 74L124 34L132 92L140 20L148 102L156 28L164 86L172 42L180 72L190 55L205 62L220 58L235 61L250 59L265 61L280 60L300 60"/></svg>
+                <span class="tagline"><span class="dot hot"></span>Fuite détectée</span>
+              </div>
+              <div class="pane p2">
+                <svg class="map" viewBox="0 0 300 160" aria-hidden="true"><path class="mp" d="M-10 122C60 120 90 82 150 80S250 62 310 32"/><circle class="mring" cx="172" cy="78" r="16"/><circle class="mpin" cx="172" cy="78" r="8"/></svg>
+                <span class="tagline"><span class="dot hot"></span>Point exact repéré</span>
+              </div>
+              <div class="pane p3">
+                <div class="doc">
+                  <div class="doc-h"><svg aria-hidden="true"><use href="#logo-ink"/></svg><b>Rapport d'intervention</b></div>
+                  <div class="doc-row"><span>Recherche</span><b>Non destructive</b></div>
+                  <div class="doc-row"><span>Fuite</span><b class="ok">Localisée</b></div>
+                  <div class="doc-row"><span>Date</span><b id="docDate">—</b></div>
+                  <div class="doc-lines"><i></i><i></i><i style="width:60%"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="scr-dots"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <ol class="msteps">
+          <li class="mstep on" data-name="Diagnostic"><span class="k">ÉTAPE 01</span><h3>Diagnostic technique</h3><p>On part de ce que vous constatez et on contrôle l'installation pour cibler la zone à examiner.</p></li>
+          <li class="mstep" data-name="Détection"><span class="k">ÉTAPE 02</span><h3>Détection</h3><p>Appareils de détection non destructifs et caméra d'inspection confirment la présence de la fuite.</p></li>
+          <li class="mstep" data-name="Localisation"><span class="k">ÉTAPE 03</span><h3>Localisation</h3><p>On repère le point exact, au centimètre près, pour n'ouvrir qu'au bon endroit.</p></li>
+          <li class="mstep" data-name="Rapport"><span class="k">ÉTAPE 04</span><h3>Rapport</h3><p>Vous recevez un compte rendu de l'intervention, utile pour votre assureur.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <div class="head-split">
+        <div><span class="eyebrow">Nos services</span><h2>Ce que l'on fait pour vous.</h2></div>
+        <p class="lead">Maisons, appartements, jardins, allées : basés à Lormont, nous intervenons dans toute la Gironde.</p>
+      </div>
+      <ul class="svc-list">
+        <li class="row" tabindex="0" data-img="img/technicien.webp" data-pos="85% 75%">
+          <span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span>
+          <h3>Fuites d'eau sans destruction</h3>
+          <p>On confirme la fuite avec des appareils non destructifs, sans casser carrelage, dalle ou mur pour chercher.</p>
+          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
+          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/technicien.webp" style="object-position:85% 75%" alt="Détecteur de fuite et écran de contrôle posés dans l'herbe"></div></div>
+        </li>
+        <li class="row" tabindex="0" data-img="img/canalisation-1.webp">
+          <span class="ic"><svg class="i"><use href="#ic-pipe"/></svg></span>
+          <h3>Canalisations et réseaux enterrés</h3>
+          <p>On retrouve le tracé de vos canalisations extérieures et le point où elles fuient.</p>
+          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
+          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/canalisation-1.webp" alt="Canalisation enterrée dégagée dans un jardin"></div></div>
+        </li>
+        <li class="row" tabindex="0" data-img="img/canalisation-2.webp">
+          <span class="ic"><svg class="i"><use href="#ic-target"/></svg></span>
+          <h3>Localisation précise</h3>
+          <p>Le point de fuite est marqué au centimètre : l'ouverture se limite à cet endroit.</p>
+          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
+          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/canalisation-2.webp" alt="Ouverture ciblée sur une canalisation au point de fuite"></div></div>
+        </li>
+        <li class="row" tabindex="0" data-img="img/camera.webp">
+          <span class="ic"><svg class="i"><use href="#ic-cam"/></svg></span>
+          <h3>Inspection par caméra</h3>
+          <p>On filme l'intérieur des canalisations pour voir leur état sans rien démonter.</p>
+          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
+          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/camera.webp" alt="Écran de caméra d'inspection montrant l'intérieur d'une canalisation"></div></div>
+        </li>
+      </ul>
+      <p class="svc-note" id="svcNote">Survolez un service pour voir la photo du chantier.</p>
+    </div>
+    <div class="svc-float" aria-hidden="true"><img alt=""></div>
+  </section>
+
+  <!-- Tarifs : recherche de fuite à 380 € TTC, le reste sur devis (prix donnés par LOC FUITE EAU) -->
+  <section id="tarifs">
+    <div class="wrap">
+      <div class="head-split">
+        <div><span class="eyebrow">Tarifs</span><h2>Des prix clairs, avant de venir.</h2></div>
+        <p class="lead">Un tarif annoncé pour la recherche de fuite, un devis pour le reste selon votre installation.</p>
+      </div>
+      <div class="price-grid">
+        <article class="price-card main">
+          <span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span>
+          <h3>Recherche de fuite sans destruction</h3>
+          <p>Diagnostic, détection et marquage du point de fuite au centimètre.</p>
+          <div class="amount"><small>Prix TTC</small><strong>380 €</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-pipe"/></svg></span>
+          <h3>Canalisations enterrées</h3>
+          <p>Tracé de vos canalisations extérieures et localisation de la fuite.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-cam"/></svg></span>
+          <h3>Inspection par caméra</h3>
+          <p>Film de l'intérieur des canalisations, sans rien démonter.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-doc"/></svg></span>
+          <h3>Rapport pour l'assurance</h3>
+          <p>Compte rendu de l'intervention, à transmettre à votre assureur.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+      </div>
+      <div class="price-foot">
+        <p>Prix toutes taxes comprises. Pour un devis, un simple appel suffit.</p>
+        <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Demander un devis · 06 70 15 09 04</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outil : le test de fuite -->
+  <section id="test" class="sec-ice">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Outil gratuit</span>
+        <h2>Fuite cachée ? Faites le test en une minute.</h2>
+        <p class="lead">Cochez ce que vous constatez chez vous. Le résultat s'affiche tout de suite.</p>
+      </div>
+      <div class="test-grid">
+        <div class="sym-list">
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Ma facture d'eau a augmenté sans raison</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="3"><span class="sw"></span>Le compteur tourne alors que tout est fermé</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Tache d'humidité, moisissure ou peinture qui cloque</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Bruit d'écoulement alors que personne n'utilise l'eau</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Zone du jardin anormalement humide ou affaissée</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="1"><span class="sw"></span>Moins de pression aux robinets qu'avant</button>
+          <div class="live" aria-hidden="true"><span id="liveTxt">Risque faible · Aucun signe pour l'instant</span><a href="#resultat">Résultat ↓</a></div>
+        </div>
+        <div class="result" id="resultat" aria-live="polite">
+          <svg class="gauge" viewBox="0 0 220 128" aria-hidden="true">
+            <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#2D7CFF"/><stop offset=".55" stop-color="#66A9FF"/><stop offset="1" stop-color="#FF7A45"/></linearGradient></defs>
+            <path class="g-track" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke-width="14" stroke-linecap="round"/>
+            <path id="arc" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke="url(#gg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
+            <g id="needle" class="needle" style="transform:rotate(-90deg)"><line x1="110" y1="110" x2="110" y2="42" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="9"/></g>
+          </svg>
+          <span class="lvl" id="lvl" data-l="ok">Risque faible</span>
+          <h3 id="verdict">Aucun signe pour l'instant</h3>
+          <p id="advice">Cochez les signes que vous constatez.</p>
+          <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>En parler au 06 70 15 09 04</a>
+        </div>
+      </div>
+
+      <div class="meter">
+        <h3>Le test du compteur, à faire chez vous</h3>
+        <div class="meter-grid">
+          <div class="ms"><span class="n">01</span><h4>Fermez tous les robinets</h4><p>Aucun appareil en marche : lave-linge, lave-vaisselle, chasse d'eau.</p></div>
+          <div class="ms"><span class="n">02</span><h4>Relevez le compteur</h4><p>Notez tous les chiffres, ou prenez-le simplement en photo.</p></div>
+          <div class="ms"><span class="n">03</span><h4>Attendez 30 minutes</h4><p>Sans utiliser d'eau, puis relevez-le à nouveau. Si les chiffres ont bougé, l'eau s'échappe quelque part.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chantiers -->
+  <section id="chantiers">
+    <div class="wrap">
+      <div class="head-split">
+        <div><span class="eyebrow">Sur le terrain</span><h2>Des chantiers, pas des promesses.</h2></div>
+        <p class="lead">Photos réelles d'interventions LOC FUITE EAU.</p>
+      </div>
+      <div class="ch-grid">
+        <article class="ch" data-par="-0.025">
+          <div class="stage">
+            <span class="lab">Avant</span>
+            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/allee-ouverture.webp" alt="Ouverture ciblée dans l'allée, canalisation dégagée au point de fuite">
+            <img loading="lazy" decoding="async" width="800" height="1067" src="img/allee-apres.webp" alt="La même allée remise en état après l'intervention, gravier en place">
+          </div>
+          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
+            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="Une seule ouverture, à l'endroit exact repéré pendant la détection.">Avant</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="L'allée remise en état : gravier en place, plus rien ne se voit.">Après</button>
+          </div></div>
+          <div class="cap"><h3>Allée gravillonnée</h3><p>Une seule ouverture, à l'endroit exact repéré pendant la détection.</p></div>
+        </article>
+        <article class="ch" data-par="0.025">
+          <div class="stage">
+            <span class="lab">Avant</span>
+            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-ouverture.webp" alt="Ouverture limitée dans un jardin, au point de fuite">
+            <img loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-apres.webp" alt="Le même jardin, terrain rebouché après l'intervention">
+          </div>
+          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
+            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="L'ouverture se limite à la zone de la fuite, repérée avant de creuser.">Avant</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="Terrain rebouché une fois l'intervention terminée.">Après</button>
+          </div></div>
+          <div class="cap"><h3>Jardin</h3><p>L'ouverture se limite à la zone de la fuite, repérée avant de creuser.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avis + questions -->
+  <section id="avis" class="sec-mid">
+    <div class="wrap">
+      <div class="rev-head">
+        <div class="head">
+          <span class="eyebrow">Avis clients</span>
+          <h2>Ils nous ont fait confiance.</h2>
+        </div>
+        <a class="score" href="https://www.google.com/maps/place/LOC+FUITE+EAU/@44.865298,-0.5216811,17z/data=!4m6!3m5!1s0x6ae4f571f1b55f99:0x76924126b068f9fd!8m2!3d44.865298!4d-0.5216811!16s%2Fg%2F11zx__0_sk" target="_blank" rel="noopener">
+          <b>5,0</b><span><span class="stars">★★★★★</span>Avis Google<br>Voir sur Google Maps</span>
+        </a>
+      </div>
+      <div class="rev-grid">
+        <figure class="rev" data-par="0.03">
+          <q>Fuite d'eau détectée en moins de 15 minutes ! Du matériel de professionnel, rien à dire. Merci à vous.</q>
+          <figcaption class="who"><span class="av">A</span><span><strong>Ay I.</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+        <figure class="rev" data-par="-0.03">
+          <q>Merci à Loc Fuite Eau d'avoir détecté ma fuite au centimètre près, donc je n'ai pas eu besoin de faire une grande ouverture du sol ! Sur mon réseau extérieur de canalisation, je recommande.</q>
+          <figcaption class="who"><span class="av">S</span><span><strong>Sifeddine E.</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+        <figure class="rev" data-par="0.02">
+          <q>J'avais une fuite d'eau et le technicien a su être réactif pour la détecter. L'avantage, c'est qu'il propose même de faire les réparations. Je recommande à 100 %.</q>
+          <figcaption class="who"><span class="av">Y</span><span><strong>Ysra</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+      </div>
+      <p class="swipe-hint">Faites glisser pour lire les autres avis →</p>
+
+      <div class="faq" id="faq">
+        <div class="head">
+          <span class="eyebrow">Questions fréquentes</span>
+          <h2>Les réponses avant d'appeler.</h2>
+        </div>
+        <details>
+          <summary>Qui paie la recherche de fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Quand une fuite provoque un dégât des eaux, la recherche de fuite est souvent prise en charge par l'assurance habitation de l'occupant du logement (convention IRSI). Chaque contrat est différent : vérifiez le vôtre ou demandez à votre assureur. Après l'intervention, vous recevez un rapport à lui transmettre.</p><small>Information générale, à vérifier selon votre contrat.</small></div>
+        </details>
+        <details>
+          <summary>Ma facture d'eau a explosé, que faire ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Si une fuite sur une canalisation située après le compteur fait plus que doubler votre consommation habituelle, la loi (dite « Warsmann ») permet de demander à votre service des eaux de plafonner la facture d'un logement. Il faut lui fournir, dans le mois, l'attestation d'une entreprise de plomberie indiquant que la fuite a été réparée, où et quand.</p><small>Ne concerne pas les fuites d'appareils ménagers, de sanitaires ou de chauffage.</small></div>
+        </details>
+        <details>
+          <summary>Faut-il casser pour trouver la fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Non. On utilise une caméra d'inspection et des appareils de détection non destructifs pour localiser la fuite avant d'ouvrir quoi que ce soit. Si une ouverture est nécessaire, elle se limite au point exact.</p></div>
+        </details>
+        <details>
+          <summary>Vous réparez aussi la fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Une fois la fuite localisée, nous pouvons vous proposer une solution de réparation. Parlons-en au téléphone.</p></div>
+        </details>
+        <details>
+          <summary>Où et quand intervenez-vous ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Basés à Lormont, nous intervenons dans toute la Gironde, du lundi au samedi de 8h à 18h.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap ct-grid">
+      <div class="ct-card" data-tilt3d>
+        <span class="status"><span data-status>Lun – sam · 8h – 18h</span></span>
+        <h2>Une fuite ? On s'en occupe.</h2>
+        <a class="big-tel" id="bigTel" href="tel:+33670150904"><span>06</span><span>70</span><span>15</span><span>09</span><span>04</span></a>
+        <ul class="ct-list">
+          <li><svg class="i"><use href="#ic-mail"/></svg><a href="mailto:Locfuite.eau@gmail.com">Locfuite.eau@gmail.com</a></li>
+          <li><svg class="i"><use href="#ic-pin"/></svg>Basé à Lormont (33310) · intervention dans toute la Gironde</li>
+          <li><svg class="i"><use href="#ic-clock"/></svg>Du lundi au samedi, de 8h à 18h</li>
+        </ul>
+        <div class="ct-actions">
+          <a class="btn btn-white" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Appeler maintenant</a>
+          <button class="btn btn-glass" id="copyTel" type="button"><svg class="i"><use href="#ic-copy"/></svg><span>Copier le numéro</span></button>
+        </div>
+      </div>
+
+      <form class="form" id="form" novalidate>
+        <h3>Décrivez votre problème</h3>
+        <label for="f-nom">Nom<input id="f-nom" name="nom" autocomplete="name" required></label>
+        <label for="f-tel">Téléphone<input id="f-tel" name="tel" type="tel" autocomplete="tel" required></label>
+        <label for="f-ville">Commune<input id="f-ville" name="ville" autocomplete="address-level2" placeholder="Lormont, Cenon, Bordeaux…"></label>
+        <label for="f-type">Type de problème
+          <select id="f-type" name="type">
+            <option>Fuite d'eau visible</option>
+            <option>Facture d'eau anormale</option>
+            <option>Humidité, tache, moisissure</option>
+            <option>Canalisation enterrée</option>
+            <option>Inspection par caméra</option>
+            <option>Autre</option>
+          </select>
+        </label>
+        <label class="full" for="f-msg">Message<textarea id="f-msg" name="msg" placeholder="Depuis quand, où, ce que vous avez remarqué…"></textarea></label>
+        <input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary full" type="submit"><span class="lbl">Envoyer ma demande</span><svg class="i i-arrow"><use href="#ic-arrow"/></svg></button>
+        <p class="form-err" id="formErr" role="alert" hidden>L'envoi n'a pas abouti. Appelez le <a href="tel:+33670150904">06 70 15 09 04</a> ou <a id="smsLink" href="sms:+33670150904">envoyez votre demande par SMS</a>.</p>
+        <p class="note">Nom et téléphone suffisent pour être rappelé. Vos informations servent uniquement à traiter votre demande (<a href="mentions-legales.html#donnees">en savoir plus</a>).</p>
+        <div class="sent">
+          <div class="ok-ic"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"/></svg></div>
+          <h3>Demande envoyée</h3>
+          <p>Elle est bien arrivée chez LOC FUITE EAU, qui vous recontacte. Pour une urgence : 06 70 15 09 04.</p>
+          <button class="btn btn-ghost sm" id="again" type="button">Nouvelle demande</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap ft">
+    <div>
+      <a class="brand" href="#top"><svg><use href="#logo"/></svg><span>LOC <b>FUITE</b> EAU</span></a>
+      <p>Recherche et localisation de fuites d'eau non destructive.<br>Détecter · Localiser · Accompagner</p>
+    </div>
+    <div>
+      <p><a href="tel:+33670150904">06 70 15 09 04</a><br><a href="mailto:Locfuite.eau@gmail.com">Locfuite.eau@gmail.com</a><br>Lormont (33310) · Gironde</p>
+    </div>
+    <div>
+      <p>SIREN 920 101 011<br><a href="mentions-legales.html">Mentions légales</a><br>© 2026 LOC FUITE EAU</p>
+    </div>
+    <p class="demo">Site réalisé par Lawrence.</p>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-primary ring" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Appeler</a>
+  <a class="btn btn-ghost" href="#contact">Demande</a>
+</div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Le site s'ouvre toujours en haut : le navigateur ne reprend pas l'ancienne position
+  // (formulaire en bas de page), et un lien partagé avec #contact n'emmène pas directement en bas.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  scrollTo({ top: 0, behavior: 'instant' });
+  // Liens internes : on défile sans écrire #section dans l'adresse, pour qu'un lien copié reste propre
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href').slice(1);
+    const el = id && id !== 'top' ? document.getElementById(id) : null;
+    if (id && id !== 'top' && !el) return;
+    e.preventDefault();
+    if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    else scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const vib = ms => {
+    try {
+      const ua = navigator.userActivation;
+      if (navigator.vibrate && (!ua || ua.hasBeenActive)) navigator.vibrate(ms);
+    } catch (e) {}
+  };
+
+  // Mode d'affichage : « auto » = méthode en lecture automatique (petit écran, ou page qui ne défile pas)
+  const setMode = () => {
+    const scrollable = root.scrollHeight > innerHeight + 80;
+    root.classList.toggle('static', !scrollable);
+    root.classList.toggle('auto', innerWidth <= 1020 || !scrollable);
+  };
+  setMode();
+  const isAuto = () => root.classList.contains('auto');
+
+  // Boutons : ondes au clic, petite vibration au toucher, effet aimanté à la souris
+  $$('.btn').forEach(b => {
+    b.addEventListener('pointerdown', e => {
+      const r = b.getBoundingClientRect(), s = Math.max(r.width, r.height) * 1.5;
+      [0, 1].forEach(k => {
+        const sp = document.createElement('span');
+        sp.className = 'ripple' + (k ? ' r2' : '');
+        sp.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left}px;top:${e.clientY - r.top}px`;
+        b.appendChild(sp);
+        setTimeout(() => sp.remove(), 1000);
+      });
+      if (e.pointerType === 'touch') vib(8);
+    });
+    if (fine && !reduce) {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.setProperty('--mx', (((e.clientX - r.left) / r.width - .5) * 10).toFixed(1) + 'px');
+        b.style.setProperty('--my', (((e.clientY - r.top) / r.height - .5) * 8).toFixed(1) + 'px');
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+    }
+  });
+
+  // Titres qui montent mot à mot, seulement pour ceux qu'on n'a pas encore vus
+  const heads = $$('main h2');
+  heads.forEach(h => {
+    const words = h.textContent.trim().split(/\s+/);
+    h.textContent = '';
+    words.forEach((w, i) => {
+      const o = document.createElement('span'); o.className = 'w';
+      const s = document.createElement('span'); s.textContent = w; s.style.setProperty('--i', i);
+      o.appendChild(s); h.appendChild(o);
+      if (i < words.length - 1) h.appendChild(document.createTextNode(' '));
+    });
+    if (!reduce && !root.classList.contains('static') && h.getBoundingClientRect().top > innerHeight) h.classList.add('pre');
+  });
+  const hio = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.remove('pre'); hio.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -12% 0px' });
+  heads.filter(h => h.classList.contains('pre')).forEach(h => hio.observe(h));
+
+  // Méthode : l'écran et le chemin suivent l'étape active
+  const msteps = $$('.mstep'), screen = $('#screen'), scrN = $('#scrN'), scrName = $('#scrName'), ol = $('.msteps');
+  let cur = 0, autoTimer = 0, pauseUntil = 0, methVisible = false;
+  const fillTo = i => {
+    const s = msteps[i];
+    ol.style.setProperty('--fill', ((s.offsetTop + s.offsetHeight / 2) / ol.offsetHeight).toFixed(4));
+  };
+  const setStep = (a, fromUser) => {
+    if (a !== cur) {
+      screen.classList.add('anim');
+      cur = a;
+      msteps.forEach((s, i) => { s.classList.toggle('on', i === a); s.classList.toggle('past', i < a); });
+      screen.dataset.step = a;
+      scrN.textContent = a + 1;
+      scrName.textContent = msteps[a].dataset.name;
+    }
+    if (isAuto()) fillTo(a);
+    if (fromUser) pauseUntil = performance.now() + 9000;
+  };
+  const tick = () => {
+    if (!isAuto() || !methVisible || reduce || performance.now() < pauseUntil) return;
+    setStep((cur + 1) % msteps.length);
+  };
+  msteps.forEach((s, i) => s.addEventListener('click', () => { if (isAuto()) { setStep(i, true); vib(6); } }));
+  new IntersectionObserver(([e]) => {
+    methVisible = e.isIntersecting;
+    clearInterval(autoTimer);
+    if (methVisible) autoTimer = setInterval(tick, 2800);
+  }, { threshold: .3 }).observe(screen);
+  if (isAuto()) fillTo(0);
+
+  // Défilement : fil d'eau, cartes inclinées, parallaxe, méthode, menu actif
+  const top = $('header.top'), pipe = $('.pipe'), water = $('.pipe .water'), drop = $('.pipe .drop');
+  const tilts = $$('[data-tilt3d]'), pars = $$('[data-par]');
+  const links = $$('.menu a'), secs = links.map(a => $(a.getAttribute('href')));
+  let lastY = scrollY, vel = 0, ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = scrollY, vh = innerHeight;
+    vel = y - lastY; lastY = y;
+    top.classList.toggle('scrolled', y > 8);
+    const max = root.scrollHeight - vh;
+    const p = max > 0 ? clamp(y / max, 0, 1) : 0;
+    water.style.transform = `scaleX(${p.toFixed(4)})`;
+    drop.style.transform = `translateX(${(p * pipe.clientWidth).toFixed(1)}px)`;
+    if (!reduce) {
+      tilts.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) return;
+        const k = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+        el.style.transform = `perspective(1200px) rotateX(${(-k * 8).toFixed(2)}deg) translateY(${(k * 20).toFixed(1)}px)`;
+      });
+      if (innerWidth > 760) pars.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        el.style.translate = `0 ${((r.top + r.height / 2 - vh / 2) * +el.dataset.par).toFixed(1)}px`;
+      });
+    }
+    if (!isAuto()) {
+      // Une étape devient active quand son point passe la ligne de lecture : le chemin bleu l'atteint au même moment
+      const line = vh * .5;
+      let a = 0;
+      msteps.forEach((s, i) => { const r = s.getBoundingClientRect(); if (r.top + r.height / 2 <= line) a = i; });
+      setStep(a);
+      const r = ol.getBoundingClientRect();
+      ol.style.setProperty('--fill', clamp((line - r.top) / r.height, 0, 1).toFixed(4));
+    }
+    let on = -1;
+    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < vh * .4) on = i; });
+    links.forEach((l, i) => l.classList.toggle('on', i === on));
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => { setMode(); if (isAuto()) fillTo(cur); onScroll(); });
+  update();
+
+  // Bandeau défilant : il accélère et change de sens avec le défilement
+  const band = $('.band'), track = $('#track');
+  if (band && track && !reduce) {
+    let x = 0, half = 0, run = false, dir = -1;
+    const measure = () => { half = track.scrollWidth / 2; };
+    measure();
+    addEventListener('resize', measure);
+    if (document.fonts) document.fonts.ready.then(measure);
+    const loop = () => {
+      if (!run) return;
+      if (vel) dir = vel > 0 ? -1 : 1;
+      const sp = .55 + Math.min(Math.abs(vel) * .35, 10);
+      vel *= .9;
+      x += dir * sp;
+      if (half) { if (x <= -half) x += half; if (x > 0) x -= half; }
+      track.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+      requestAnimationFrame(loop);
+    };
+    new IntersectionObserver(([e]) => {
+      const was = run; run = e.isIntersecting;
+      if (run && !was) requestAnimationFrame(loop);
+    }).observe(band);
+  }
+
+  // Photo d'accueil : inclinaison 3D et ondes comme sur l'eau
+  const card = $('#card3d'), ph = $('#heroPh');
+  if (card && fine && !reduce) {
+    const zone = $('.hero');
+    zone.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      const x = clamp((e.clientX - (r.left + r.width / 2)) / r.width, -1, 1);
+      const y = clamp((e.clientY - (r.top + r.height / 2)) / r.height, -1, 1);
+      card.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+      card.style.setProperty('--px', (-x * 14).toFixed(1) + 'px');
+      card.style.setProperty('--py', (-y * 10).toFixed(1) + 'px');
+    });
+    zone.addEventListener('pointerleave', () => {
+      card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg');
+      card.style.setProperty('--px', '0px'); card.style.setProperty('--py', '0px');
+    });
+  }
+  if (ph && !reduce) {
+    let last = 0, lx = 0, ly = 0;
+    const ripple = (x, y) => {
+      const s = document.createElement('span');
+      s.className = 'hr'; s.style.left = x + 'px'; s.style.top = y + 'px';
+      ph.appendChild(s); setTimeout(() => s.remove(), 1300);
+    };
+    ph.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse') return;
+      const r = ph.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, now = performance.now();
+      if (now - last > 110 && Math.hypot(x - lx, y - ly) > 28) { last = now; lx = x; ly = y; ripple(x, y); }
+    });
+    ph.addEventListener('pointerdown', e => {
+      const r = ph.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      ripple(x, y); setTimeout(() => ripple(x, y), 180);
+      if (e.pointerType === 'touch') vib(10);
+    });
+  }
+
+  // Le détecteur : trouver la fuite cachée
+  const field = $('#field');
+  if (field) {
+    const device = field.closest('.device');
+    const xray = $('.xray', field), probe = $('#probe'), hint = $('#hint'), pin = $('#pin');
+    const pipeMain = $('#pipeMain'), hot = $('#hot');
+    const bars = $$('#bars i'), wave = $('#wave'), sigEl = $('#sig'), distEl = $('#dist'), stateEl = $('#detState');
+    const VBW = 400, VBH = 300, L = pipeMain.getTotalLength();
+    let leak, pos = { x: 200, y: 150 }, target = { x: 200, y: 150 };
+    let user = false, found = false, running = false, t0 = performance.now(), hold = 0, sig = 0, lastBuzz = 0;
+    if (!fine) hint.textContent = 'Touchez le terrain pour chercher la fuite';
+
+    const newLeak = () => {
+      const p = pipeMain.getPointAtLength(L * (.3 + Math.random() * .45));
+      leak = { x: p.x, y: p.y };
+      hot.setAttribute('cx', p.x.toFixed(1));
+      hot.setAttribute('cy', p.y.toFixed(1));
+    };
+    newLeak();
+
+    const toVB = (cx, cy) => {
+      const r = field.getBoundingClientRect();
+      return { x: clamp((cx - r.left) / r.width, 0, 1) * VBW, y: clamp((cy - r.top) / r.height, 0, 1) * VBH };
+    };
+    const start = () => { if (!user) { user = true; hint.classList.add('hide'); } };
+    field.addEventListener('pointermove', e => {
+      if (found) return;
+      if (e.pointerType === 'mouse' || e.buttons) { start(); target = toVB(e.clientX, e.clientY); }
+    });
+    field.addEventListener('pointerdown', e => {
+      if (found) return;
+      start(); target = toVB(e.clientX, e.clientY);
+    });
+
+    const onFound = () => {
+      found = true;
+      device.classList.add('found');
+      const r = field.getBoundingClientRect();
+      xray.style.clipPath = `circle(150% at ${(leak.x / VBW * r.width).toFixed(1)}px ${(leak.y / VBH * r.height).toFixed(1)}px)`;
+      pin.style.left = (leak.x / VBW * 100) + '%';
+      pin.style.top = (leak.y / VBH * 100) + '%';
+      stateEl.textContent = 'Fuite localisée';
+      vib([30, 60, 30]);
+    };
+
+    $('#replay').addEventListener('click', () => {
+      found = false; user = false; hold = 0;
+      device.classList.remove('found');
+      hint.classList.remove('hide');
+      stateEl.textContent = 'Écoute en cours';
+      newLeak();
+      t0 = performance.now();
+    });
+
+    const frame = now => {
+      if (!running) return;
+      const t = (now - t0) / 1000;
+      if (!user && !found) target = { x: 200 + 150 * Math.sin(t * .55), y: 150 + 85 * Math.sin(t * .83 + 1.2) };
+      const k = user ? .2 : .08;
+      pos.x += (target.x - pos.x) * k;
+      pos.y += (target.y - pos.y) * k;
+      const d = Math.hypot(pos.x - leak.x, pos.y - leak.y);
+      const want = found ? 1 : Math.pow(Math.max(0, 1 - d / 190), 1.6);
+      sig += (want - sig) * .12;
+
+      const r = field.getBoundingClientRect();
+      const px = pos.x / VBW * r.width, py = pos.y / VBH * r.height;
+      if (!found) xray.style.clipPath = `circle(${Math.max(62, r.width * .17).toFixed(1)}px at ${px.toFixed(1)}px ${py.toFixed(1)}px)`;
+      probe.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`;
+      probe.style.setProperty('--s', (1 + sig * .18).toFixed(3));
+
+      const lit = Math.round(sig * bars.length);
+      bars.forEach((b, i) => { b.className = i < lit ? (sig > .72 ? 'h' : 'on') : ''; });
+
+      let pts = '';
+      const amp = 3 + sig * 20, f = .22 + sig * .5;
+      for (let i = 0; i < 64; i++) {
+        const x = i * (200 / 63);
+        const y = 28 + Math.sin(i * f + t * 9) * amp * (.55 + .45 * Math.sin(i * .15 + t * 2)) + (Math.random() - .5) * (1 - sig) * 5;
+        pts += x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+      }
+      wave.setAttribute('points', pts);
+      sigEl.textContent = (found ? 100 : Math.round(sig * 100)) + ' %';
+      distEl.textContent = found ? 'ici' : '≈ ' + (d / 40).toFixed(1).replace('.', ',') + ' m';
+
+      if (user && !found) {
+        if (sig > .6 && now - lastBuzz > 900 - sig * 600) { lastBuzz = now; vib(6); }
+        if (d < 17) { if (!hold) hold = now; if (now - hold > 300) onFound(); }
+        else hold = 0;
+      }
+      requestAnimationFrame(frame);
+    };
+    new IntersectionObserver(([e]) => {
+      const was = running;
+      running = e.isIntersecting;
+      if (running && !was) requestAnimationFrame(frame);
+    }).observe(field);
+  }
+
+  // Date du rapport (écran de la méthode)
+  const dd = $('#docDate');
+  if (dd) try { dd.textContent = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Paris' }).format(new Date()); } catch (e) {}
+
+  // Services : la photo du chantier suit le curseur, ou s'ouvre au toucher
+  const rows = $$('.row'), flt = $('.svc-float'), fimg = flt && $('img', flt);
+  if (!fine) { const n = $('#svcNote'); if (n) n.textContent = 'Touchez un service pour voir la photo du chantier.'; }
+  if (flt && fine && !reduce) {
+    let tx = 0, ty = 0, x = 0, y = 0, on = false, raf = 0;
+    const loop = () => {
+      const dx = tx - x;
+      x += dx * .22; y += (ty - y) * .22;
+      flt.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -58%) rotate(${clamp(dx * .06, -8, 8).toFixed(2)}deg)`;
+      raf = (on || Math.abs(dx) > .5) ? requestAnimationFrame(loop) : 0;
+    };
+    rows.forEach(row => {
+      const pre = new Image(); pre.src = row.dataset.img;
+      row.addEventListener('pointerenter', e => {
+        fimg.src = row.dataset.img;
+        fimg.style.objectPosition = row.dataset.pos || '50% 50%';
+        if (!flt.classList.contains('show')) { x = tx = e.clientX; y = ty = e.clientY; }
+        on = true; flt.classList.add('show');
+        if (!raf) raf = requestAnimationFrame(loop);
+      });
+      row.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; });
+      row.addEventListener('pointerleave', () => { on = false; flt.classList.remove('show'); });
+    });
+  }
+  // Les photos des services sont cachées tant qu'une ligne est fermée : on les charge dès que la section approche
+  const svcList = $('.svc-list');
+  if (svcList) new IntersectionObserver(([e], o) => {
+    if (e.isIntersecting) { $$('.row-img img').forEach(im => { im.loading = 'eager'; }); o.disconnect(); }
+  }, { rootMargin: '800px 0px' }).observe(svcList);
+  const toggleRow = row => {
+    const im = $('.row-img img', row);
+    if (im) { im.loading = 'eager'; if (im.decode) im.decode().catch(() => {}); }
+    const open = !row.classList.contains('open');
+    rows.forEach(r => r.classList.remove('open'));
+    row.classList.toggle('open', open);
+  };
+  rows.forEach(row => {
+    row.addEventListener('click', () => { if (fine) return; toggleRow(row); vib(8); });
+    row.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      toggleRow(row);
+    });
+  });
+
+  // Le test de fuite
+  const syms = $$('.sym');
+  const arc = $('#arc'), needle = $('#needle'), verdict = $('#verdict'), advice = $('#advice'), lvl = $('#lvl'), liveTxt = $('#liveTxt'), live = $('.live');
+  if (arc) {
+    const AL = arc.getTotalLength();
+    arc.style.strokeDasharray = AL;
+    arc.style.strokeDashoffset = AL;
+    const levels = [
+      { max: 0, l: 'ok', t: "Aucun signe pour l'instant", a: "Bonne nouvelle. Faites tout de même le test du compteur une fois par an : une fuite enterrée peut couler des mois sans se voir." },
+      { max: 2, l: 'low', t: "Rien d'alarmant, restez attentif", a: "Ce signe seul ne suffit pas pour conclure. Faites le test du compteur ci-dessous : s'il tourne alors que tout est fermé, appelez-nous." },
+      { max: 4, l: 'mid', t: 'Fuite possible', a: "Ce que vous constatez mérite une vérification. Une recherche non destructive permet d'en avoir le cœur net, sans ouvrir au hasard." },
+      { max: 99, l: 'high', t: 'Fuite probable', a: "Les signes sont nets. Chaque jour, l'eau perdue se paie sur la facture et peut abîmer votre logement : faites localiser la fuite rapidement." }
+    ];
+    const labels = { ok: 'Risque faible', low: 'À surveiller', mid: 'Risque sérieux', high: 'Risque élevé' };
+    const colors = { ok: 'var(--ok)', low: 'var(--blue-2)', mid: 'var(--gold)', high: 'var(--hot)' };
+    const update = () => {
+      const s = syms.reduce((n, b) => n + (b.getAttribute('aria-pressed') === 'true' ? +b.dataset.w : 0), 0);
+      const v = clamp(s / 8, 0, 1);
+      arc.style.strokeDashoffset = AL * (1 - v);
+      needle.style.transform = `rotate(${(-90 + 180 * v).toFixed(1)}deg)`;
+      const L = levels.find(x => s <= x.max);
+      verdict.textContent = L.t;
+      advice.textContent = L.a;
+      lvl.dataset.l = L.l;
+      lvl.textContent = labels[L.l];
+      if (liveTxt) liveTxt.textContent = labels[L.l] + ' · ' + L.t;
+      if (live) live.style.color = colors[L.l];
+    };
+    syms.forEach(b => b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); vib(10); }
+      update();
+    }));
+    update();
+  }
+
+  // Chantiers : pastille glissante et fondu entre les photos
+  $$('.ch').forEach(ch => {
+    const tabs = $$('.tab', ch), imgs = $$('.stage img', ch), cap = $('.cap p', ch), lab = $('.lab', ch), ind = $('.ind', ch);
+    let i = 0, timer = 0, touched = false;
+    const place = () => { const t = tabs[i]; ind.style.width = t.offsetWidth + 'px'; ind.style.transform = `translateX(${t.offsetLeft}px)`; };
+    const ready = im => Promise.race([
+      (im.decode ? im.decode() : Promise.resolve()).catch(() => {}),
+      new Promise(r => setTimeout(r, 300))
+    ]);
+    const go = n => {
+      i = n;
+      tabs.forEach((t, k) => t.setAttribute('aria-selected', k === n ? 'true' : 'false'));
+      cap.textContent = tabs[n].dataset.cap;
+      lab.textContent = tabs[n].textContent;
+      place();
+      // La photo n'apparaît qu'une fois entièrement décodée : jamais de cadre vide pendant le fondu
+      ready(imgs[n]).then(() => { if (i === n) imgs.forEach((im, k) => im.classList.toggle('on', k === n)); });
+    };
+    new IntersectionObserver(([e], o) => {
+      if (e.isIntersecting) { imgs.forEach(im => { im.loading = 'eager'; ready(im); }); o.disconnect(); }
+    }, { rootMargin: '600px 0px' }).observe(ch);
+    tabs.forEach((t, k) => t.addEventListener('click', () => { touched = true; clearInterval(timer); go(k); vib(6); }));
+    new IntersectionObserver(([e]) => {
+      clearInterval(timer);
+      if (e.isIntersecting && !touched && !reduce) timer = setInterval(() => go((i + 1) % tabs.length), 3600);
+    }, { threshold: .4 }).observe(ch);
+    addEventListener('resize', place);
+    if (document.fonts) document.fonts.ready.then(place);
+    place();
+  });
+
+  // Questions : ouverture en douceur
+  $$('.faq details').forEach(d => {
+    const s = $('summary', d), a = $('.ans', d);
+    s.addEventListener('click', e => {
+      if (reduce || !a.animate) return;
+      e.preventDefault();
+      if (d.open) {
+        const h = a.offsetHeight;
+        const an = a.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 300, easing: 'ease' });
+        an.onfinish = () => { d.open = false; };
+        setTimeout(() => { d.open = false; }, 340);
+      } else {
+        d.open = true;
+        const h = a.offsetHeight;
+        a.animate([{ height: '0px', opacity: 0 }, { height: h + 'px', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)' });
+      }
+    });
+  });
+
+  // Ouvert / fermé selon l'heure de Bordeaux
+  try {
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    const get = t => parts.find(p => p.type === t).value;
+    const wd = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(get('weekday'));
+    const mins = (+get('hour') % 24) * 60 + +get('minute');
+    const open = wd >= 0 && wd <= 5 && mins >= 480 && mins < 1080;
+    let txt;
+    if (open) txt = "Ouvert maintenant · jusqu'à 18h";
+    else if (wd <= 5 && mins < 480) txt = "Fermé · ouvre aujourd'hui à 8h";
+    else if (wd < 5) txt = 'Fermé · ouvre demain à 8h';
+    else txt = 'Fermé · ouvre lundi à 8h';
+    $$('[data-status]').forEach(el => { el.textContent = txt; el.parentElement.classList.toggle('open', open); });
+  } catch (e) {}
+
+  // Copier le numéro
+  const copyBtn = $('#copyTel');
+  if (copyBtn) copyBtn.addEventListener('click', () => {
+    const label = $('span', copyBtn);
+    const done = txt => { label.textContent = txt; setTimeout(() => { label.textContent = 'Copier le numéro'; }, 2000); };
+    const fallback = () => {
+      const sel = getSelection(), rg = document.createRange();
+      rg.selectNodeContents($('#bigTel')); sel.removeAllRanges(); sel.addRange(rg);
+      done('Numéro sélectionné');
+    };
+    try { navigator.clipboard.writeText('06 70 15 09 04').then(() => done('Numéro copié ✓'), fallback); } catch (e) { fallback(); }
+  });
+
+  // Formulaire : la demande part par e-mail chez LOC FUITE EAU (service FormSubmit) ;
+  // si l'envoi échoue, on propose d'appeler ou d'envoyer la même demande par SMS.
+  const form = $('#form');
+  const sendBtn = $('button[type=submit]', form), sendLbl = $('.lbl', sendBtn);
+  const formErr = $('#formErr');
+  const MAIL = 'locfuite.eau@gmail.com';
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (sendBtn.disabled) return;
+    const bad = ['#f-nom', '#f-tel'].map(s => $(s, form)).filter(el => !el.value.trim());
+    if (bad.length) {
+      form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+      bad[0].focus();
+      vib(20);
+      return;
+    }
+    const v = s => $(s, form).value.trim();
+    const ville = v('#f-ville');
+    const data = {
+      'Nom': v('#f-nom'),
+      'Téléphone': v('#f-tel'),
+      'Commune': ville || 'Non précisée',
+      'Problème': v('#f-type'),
+      'Message': v('#f-msg') || '—',
+      _subject: 'Nouvelle demande du site : ' + v('#f-type') + (ville ? ' à ' + ville : ''),
+      _template: 'table',
+      _honey: v('[name=_honey]')
+    };
+    formErr.hidden = true;
+    sendBtn.disabled = true; sendLbl.textContent = 'Envoi en cours…';
+    try {
+      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 15000);
+      const r = await fetch('https://formsubmit.co/ajax/' + MAIL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+        signal: ctrl.signal
+      });
+      clearTimeout(timer);
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || String(res.success) !== 'true') throw new Error(res.message || 'HTTP ' + r.status);
+      form.classList.add('done');
+      vib([10, 40, 10]);
+    } catch (x) {
+      const sms = 'Demande depuis le site LOC FUITE EAU\nNom : ' + data['Nom'] + '\nTél : ' + data['Téléphone'] +
+        '\nCommune : ' + data['Commune'] + '\nProblème : ' + data['Problème'] + '\n' + data['Message'];
+      $('#smsLink').href = 'sms:+33670150904?&body=' + encodeURIComponent(sms);
+      formErr.hidden = false;
+      vib(20);
+    } finally {
+      sendBtn.disabled = false; sendLbl.textContent = 'Envoyer ma demande';
+    }
+  });
+  $('#again').addEventListener('click', () => { form.reset(); form.classList.remove('done'); formErr.hidden = true; });
+})();
+</script>
+</body>
+</html>
