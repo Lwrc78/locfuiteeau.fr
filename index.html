@@ -162,6 +162,9 @@
   .hero h1 { font-size: clamp(38px, 5.4vw, 66px); margin: 20px 0 22px; }
   .hero h1 .accent { background: linear-gradient(90deg, var(--blue-3), var(--blue-2) 45%, var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero .lead { margin-bottom: 32px; }
+  /* Étiquette posée sur la photo de fond (téléphone uniquement) */
+  .hero-tag { display: none; align-items: center; gap: 8px; margin-bottom: 14px; padding: 7px 12px 7px 9px; border-radius: 999px; background: rgba(8,28,66,.72); border: 1px solid var(--line-2); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 13px; font-weight: 600; }
+  .hero-tag .i { width: 17px; height: 17px; color: var(--hot); }
   .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
   .trust { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 30px; color: var(--muted); font-size: 14px; }
   .trust span, .trust a { display: inline-flex; align-items: center; gap: 8px; }
@@ -433,8 +436,19 @@
     .price-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 760px) {
-    section { padding-block: 64px; }
-    .hero { padding-block: 32px 56px; }
+    section { padding-block: 48px; }
+    .head { margin-bottom: 30px; }
+    .head-split { margin-bottom: 26px; }
+    /* Accueil sur téléphone : la photo de Jawad en fond derrière le titre, qui s'efface vers le bleu
+       avant les boutons ; la carte photo du dessous est retirée pour ne pas montrer deux fois la même image */
+    .hero { padding-block: 26px 36px; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 82%; z-index: 0; pointer-events: none;
+      background: linear-gradient(180deg, rgba(8,32,74,.42) 0%, rgba(8,32,74,.62) 40%, rgba(8,32,74,.9) 72%, var(--bg) 100%), url("img/technicien.webp") 32% 38% / cover no-repeat; }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero h1 { text-shadow: 0 2px 20px rgba(0,8,30,.6); }
+    .hero .lead { color: var(--text); }
+    .hero .visual { display: none; }
+    .hero-tag { display: inline-flex; }
     /* Sur téléphone, la photo est petite : on ne garde que « au centimètre près », en haut,
        pour laisser voir le repère orange posé sur le point de fuite */
     .c1, .c3 { display: none; }
@@ -550,6 +564,7 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
+        <span class="hero-tag"><svg class="i"><use href="#ic-target"/></svg>Localisée au centimètre près</span>
         <span class="eyebrow">Recherche de fuite non destructive · Gironde</span>
         <h1>Votre fuite d'eau, trouvée au centimètre près. <span class="accent">Sans tout casser.</span></h1>
         <p class="lead">Détecter, localiser, accompagner : avec une caméra d'inspection et des appareils de détection non destructifs, on trouve l'origine exacte de la fuite avant d'ouvrir quoi que ce soit.</p>
