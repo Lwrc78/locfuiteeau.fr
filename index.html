@@ -110,6 +110,23 @@
   .menu a.on { color: var(--text); }
   .menu a.on::after { content: ""; position: absolute; left: 11px; right: 11px; bottom: 3px; height: 2px; border-radius: 2px; background: var(--blue-2); }
   .nav .btn { padding: 12px 16px; font-size: 14.5px; }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  /* Bouton menu (trois traits qui deviennent une croix) et panneau des sections, pour téléphone et tablette */
+  .menu-btn { display: none; position: relative; flex: none; width: 46px; height: 46px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(255,255,255,.05); color: var(--text); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .menu-btn span { position: absolute; left: 13px; right: 13px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .3s var(--ease), opacity .2s; }
+  .menu-btn span:nth-child(1) { top: 16px; }
+  .menu-btn span:nth-child(2) { top: 22px; }
+  .menu-btn span:nth-child(3) { top: 28px; }
+  .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .mnav { position: absolute; left: 0; right: 0; top: 100%; z-index: 2; display: grid; padding: 6px 16px 14px; background: var(--bg); border-bottom: 1px solid var(--line-2); box-shadow: 0 24px 40px -24px rgba(0,8,30,.9); animation: mnavIn .25s var(--ease); }
+  .mnav[hidden] { display: none; }
+  .mnav a { display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--text); font: 600 16px/1.2 var(--f-body); text-decoration: none; }
+  .mnav a:last-child { border-bottom: 0; }
+  .mnav a::after { content: "→"; color: var(--blue-2); }
+  .mnav a:active { color: var(--blue-3); }
+  @keyframes mnavIn { from { opacity: 0; transform: translateY(-8px); } }
   /* Le fil d'eau : une canalisation qui se remplit avec le défilement */
   .pipe { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--line); pointer-events: none; }
   .pipe .water { position: absolute; inset: 0; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--blue), var(--blue-2)); }
@@ -471,6 +488,7 @@
 
   @media (max-width: 1020px) {
     .menu { display: none; }
+    .menu-btn { display: inline-block; }
     .hero-grid, .det-grid, .test-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
     .result { position: static; }
     .hero-grid { gap: 48px; }
@@ -560,8 +578,20 @@
   }
   @media (max-width: 420px) {
     .nav .btn .long { display: none; }
+    .nav { gap: 10px; }
+    .nav-actions { gap: 6px; }
+    .nav .btn { padding: 11px 13px; }
     .brand { font-size: 16px; }
     .hint { font-size: 12px; }
+  }
+  /* Très petits téléphones : le bouton Appeler de l'en-tête ne garde que l'icône (le grand reste en bas d'écran) */
+  @media (max-width: 360px) {
+    .nav .btn > span:not(.ripple) { display: none; }
+    .nav .btn { padding: 12px; }
+  }
+  @media (max-width: 300px) {
+    .brand { font-size: 14px; gap: 8px; }
+    .brand svg { width: 30px; height: 30px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -618,8 +648,22 @@
       <a href="#faq">Questions</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg><span>Appeler<span class="long"> · 06 70 15 09 04</span></span></a>
+    <div class="nav-actions">
+      <a class="btn btn-primary" href="tel:+33670150904" aria-label="Appeler le 06 70 15 09 04"><svg class="i i-phone"><use href="#ic-phone"/></svg><span>Appeler<span class="long"> · 06 70 15 09 04</span></span></a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>
+    </div>
   </div>
+  <!-- Menu sur téléphone et tablette : les mêmes sections, dans un panneau qui s'ouvre sous l'en-tête -->
+  <nav class="mnav" id="mnav" aria-label="Sections" hidden>
+    <a href="#tarifs">Tarifs</a>
+    <a href="#avis">Avis</a>
+    <a href="#chantiers">Chantiers</a>
+    <a href="#test">Le test</a>
+    <a href="#detecteur">Le détecteur</a>
+    <a href="#methode">Méthode</a>
+    <a href="#faq">Questions</a>
+    <a href="#contact">Contact</a>
+  </nav>
   <div class="pipe" aria-hidden="true"><span class="water"></span><span class="drop"></span></div>
 </header>
 
@@ -1054,6 +1098,19 @@
       if (navigator.vibrate && (!ua || ua.hasBeenActive)) navigator.vibrate(ms);
     } catch (e) {}
   };
+
+  // Menu sur téléphone : s'ouvre au toucher, se referme après un choix, un toucher ailleurs ou Échap
+  const menuBtn = $('#menuBtn'), mnav = $('#mnav');
+  const setMenu = open => {
+    mnav.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  };
+  menuBtn.addEventListener('click', () => { setMenu(mnav.hidden); vib(6); });
+  mnav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('click', e => { if (!mnav.hidden && !e.target.closest('#mnav, #menuBtn')) setMenu(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !mnav.hidden) { setMenu(false); menuBtn.focus(); } });
+  addEventListener('resize', () => { if (innerWidth > 1020 && !mnav.hidden) setMenu(false); });
 
   // Mode d'affichage : « auto » = méthode en lecture automatique (petit écran, ou page qui ne défile pas)
   const setMode = () => {
