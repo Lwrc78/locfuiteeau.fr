@@ -323,6 +323,10 @@
   .mstep .k { display: block; font: 700 11.5px/1 var(--f-body); letter-spacing: .16em; color: var(--blue-2); margin-bottom: 12px; }
   .mstep h3 { font-size: clamp(22px, 2.6vw, 32px); margin-bottom: 10px; }
   .mstep p { color: var(--muted); margin: 0; max-width: 46ch; }
+  /* Liste des techniques de détection (étape 2) */
+  .mstep .tech { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; max-width: 52ch; }
+  .mstep .tech li { position: relative; padding-left: 18px; color: var(--muted); font-size: 15px; line-height: 1.45; }
+  .mstep .tech li::before { content: ""; position: absolute; left: 2px; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--blue-2); }
 
   /* Outil : le test de fuite (section claire) */
   .test-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
@@ -522,13 +526,6 @@
     .chip .ico { width: 28px; height: 28px; }
     .chip small { display: none; }
     .band { padding-block: 14px; }
-    /* Méthode sur téléphone : pas d'écran animé, les 4 étapes en liste simple, toutes lisibles */
-    .screen-wrap { display: none; }
-    .mstep { opacity: 1; cursor: default; }
-    html.auto .mstep { cursor: default; }
-    .mstep::before { background: var(--blue-2); border-color: var(--blue-2); }
-    .msteps::after { transform: none; }
-    .mstep.on::before { scale: 1; }
     .screen { padding: 10px; border-radius: 20px; }
     .scr-top { padding-bottom: 8px; }
     .scr-body { aspect-ratio: 16 / 10; }
@@ -957,7 +954,15 @@
         </div>
         <ol class="msteps">
           <li class="mstep on" data-name="Diagnostic"><span class="k">ÉTAPE 01</span><h3>Diagnostic technique</h3><p>On part de ce que vous constatez et on contrôle l'installation pour cibler la zone à examiner.</p></li>
-          <li class="mstep" data-name="Détection"><span class="k">ÉTAPE 02</span><h3>Détection</h3><p>Des appareils de détection non destructifs et une caméra d'inspection confirment la présence de la fuite.</p></li>
+          <li class="mstep" data-name="Détection"><span class="k">ÉTAPE 02</span><h3>Détection</h3><p>Recherche non destructive, selon le problème :</p>
+            <ul class="tech">
+              <li>caméra thermique, pour rechercher des anomalies de température ;</li>
+              <li>détection électroacoustique, pour les fuites sur certaines canalisations sous pression ;</li>
+              <li>gaz traceur, lorsque la méthode est adaptée ;</li>
+              <li>contrôle de pression et test du réseau ;</li>
+              <li>inspection vidéo des canalisations accessibles ;</li>
+              <li>contrôle visuel des zones suspectes.</li>
+            </ul></li>
           <li class="mstep" data-name="Localisation"><span class="k">ÉTAPE 03</span><h3>Localisation</h3><p>On repère le point exact, au centimètre près, pour n'ouvrir qu'au bon endroit.</p></li>
           <li class="mstep" data-name="Rapport"><span class="k">ÉTAPE 04</span><h3>Rapport</h3><p>Vous recevez un compte rendu de l'intervention, utile pour votre assureur.</p></li>
         </ol>
