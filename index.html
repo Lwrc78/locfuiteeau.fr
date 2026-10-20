@@ -199,6 +199,13 @@
   .c3 { bottom: 26px; left: -20px; animation-delay: -4.6s; }
   @keyframes float { 50% { translate: 0 -7px; } }
 
+  /* Bandeau bleu vif, piloté par la vitesse de défilement */
+  .band { position: relative; z-index: 1; overflow: hidden; background: linear-gradient(90deg, var(--brand-1), var(--brand-2) 50%, var(--brand-1)); padding-block: 20px; color: var(--white); }
+  .track { display: flex; align-items: center; width: max-content; will-change: transform; }
+  .track span { font: 800 clamp(26px, 4vw, 44px)/1.05 var(--f-display); letter-spacing: -.02em; padding-inline: 24px; white-space: nowrap; }
+  .track span.o { color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.9); }
+  .track svg { width: 20px; height: 26px; flex: none; color: rgba(255,255,255,.75); }
+
   /* Le détecteur */
   .det-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 60px; align-items: center; }
   .device { background: linear-gradient(180deg, var(--panel-2), var(--bg)); border: 1px solid var(--line-2); border-radius: 26px; padding: 14px; box-shadow: 0 50px 90px -40px rgba(0,8,30,.9); }
@@ -299,6 +306,45 @@
   .mstep .k { display: block; font: 700 11.5px/1 var(--f-body); letter-spacing: .16em; color: var(--blue-2); margin-bottom: 12px; }
   .mstep h3 { font-size: clamp(22px, 2.6vw, 32px); margin-bottom: 10px; }
   .mstep p { color: var(--muted); margin: 0; max-width: 46ch; }
+
+  /* Outil : le test de fuite (section claire) */
+  .test-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
+  .sym-list { display: grid; gap: 10px; }
+  .sym { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; padding: 17px 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font: 500 15.5px/1.35 var(--f-body); cursor: pointer; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .2s, background .2s, transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
+  .sym:hover { border-color: var(--line-2); transform: translateX(4px); }
+  .sym:active { transform: scale(.98); }
+  .sym .sw { flex: none; width: 46px; height: 27px; border-radius: 999px; background: var(--line-2); position: relative; transition: background .25s; }
+  .sym .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: var(--white); box-shadow: 0 1px 3px rgba(11,29,68,.3); transition: transform .35s cubic-bezier(.3,1.5,.5,1), width .2s; }
+  .sym:active .sw::after { width: 26px; }
+  .sym .sw::before { content: ""; position: absolute; right: 2px; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 50%; border: 2px solid var(--blue); opacity: 0; pointer-events: none; }
+  .sym.pop .sw::before { animation: pop .6s ease-out; }
+  @keyframes pop { from { opacity: 1; scale: .6; } to { opacity: 0; scale: 2.2; } }
+  .sym[aria-pressed="true"] { border-color: rgba(45,124,255,.55); background: linear-gradient(180deg, rgba(45,124,255,.12), rgba(45,124,255,.04)), var(--panel); }
+  .sym[aria-pressed="true"] .sw { background: var(--blue); }
+  .sym[aria-pressed="true"] .sw::after { transform: translateX(19px); }
+  .sym[aria-pressed="true"]:active .sw::after { transform: translateX(14px); }
+  .live { display: none; }
+  .result { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line-2); border-radius: 22px; padding: 28px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); text-align: center; box-shadow: 0 30px 60px -36px rgba(11,29,68,.45); }
+  .gauge { width: min(260px, 100%); margin: 0 auto 6px; display: block; }
+  .g-track { stroke: var(--line-2); }
+  .needle line { stroke: var(--text); }
+  .needle circle { fill: var(--text); }
+  #needle { transform-box: view-box; transform-origin: 110px 110px; transition: transform .7s cubic-bezier(.3,1.4,.5,1); }
+  #arc { transition: stroke-dashoffset .7s var(--ease); }
+  .lvl { display: inline-block; padding: 5px 12px; border-radius: 999px; font: 700 12px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; background: rgba(14,159,98,.12); color: var(--ok); }
+  .lvl[data-l="low"] { background: rgba(45,124,255,.12); color: var(--blue-2); }
+  .lvl[data-l="mid"] { background: rgba(255,195,77,.18); color: var(--gold); }
+  .lvl[data-l="high"] { background: rgba(255,122,69,.14); color: var(--hot); }
+  .result h3 { font-size: 24px; margin: 14px 0 10px; }
+  .result p { color: var(--muted); font-size: 15px; margin: 0 0 22px; }
+  .meter { margin-top: 56px; }
+  .meter h3 { font-size: 22px; margin-bottom: 18px; }
+  .meter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ms { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .3s, transform .4s var(--ease); }
+  .ms:hover { border-color: var(--line-2); transform: translateY(-4px); }
+  .ms .n { font: 800 13px/1 var(--f-display); color: var(--blue-2); letter-spacing: .1em; }
+  .ms h4 { font: 700 17px/1.25 var(--f-display); margin: 10px 0 6px; }
+  .ms p { color: var(--muted); font-size: 14.5px; margin: 0; }
 
   /* Chantiers */
   .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
@@ -425,7 +471,8 @@
 
   @media (max-width: 1020px) {
     .menu { display: none; }
-    .hero-grid, .det-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
+    .hero-grid, .det-grid, .test-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
+    .result { position: static; }
     .hero-grid { gap: 48px; }
     .det-grid { gap: 36px; }
     .det-grid .device { order: 2; }
@@ -456,6 +503,7 @@
     .chip { font-size: 12.5px; padding: 8px 12px 8px 8px; }
     .chip .ico { width: 28px; height: 28px; }
     .chip small { display: none; }
+    .band { padding-block: 14px; }
     /* Méthode sur téléphone : pas d'écran animé, les 4 étapes en liste simple, toutes lisibles */
     .screen-wrap { display: none; }
     .mstep { opacity: 1; cursor: default; }
@@ -472,7 +520,20 @@
     .doc-lines { display: none; }
     .chk { gap: 8px; }
     .chk li { padding: 9px 12px; font-size: 14px; }
-    .ch-grid, .price-grid { grid-template-columns: 1fr; }
+    .ch-grid, .price-grid, .meter-grid { grid-template-columns: 1fr; }
+    /* Test « Fuite cachée ? » plus compact sur téléphone */
+    .sym-list { gap: 8px; }
+    .sym { padding: 12px 14px; font-size: 14.5px; gap: 12px; }
+    .result { padding: 20px 18px; }
+    .gauge { width: min(200px, 100%); }
+    .result h3 { font-size: 21px; margin: 10px 0 8px; }
+    .result p { font-size: 14.5px; margin-bottom: 16px; }
+    .meter { margin-top: 30px; }
+    .meter h3 { font-size: 19px; margin-bottom: 12px; }
+    .meter-grid { gap: 8px; }
+    .ms { padding: 14px 16px; }
+    .ms h4 { margin: 6px 0 4px; font-size: 16px; }
+    .ms p { font-size: 14px; }
     /* Cartes de prix plus compactes : l'icône ne reste que sur la carte à 380 € */
     .price-grid { gap: 10px; }
     .price-card { padding: 16px 18px; gap: 6px; }
@@ -486,6 +547,8 @@
     .rev { flex: 0 0 84%; scroll-snap-align: center; }
     .rev:nth-child(2) { margin-top: 0; }
     .swipe-hint { display: block; }
+    .live { display: flex; position: sticky; bottom: calc(env(safe-area-inset-bottom, 0px) + 86px); z-index: 5; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line-2); font-size: 14px; font-weight: 600; box-shadow: 0 18px 30px -16px rgba(11,29,68,.5); }
+    .live a { color: var(--blue-2); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
     .form { grid-template-columns: 1fr; padding: 24px; }
     .ct-card { padding: 28px 24px; }
     .hud { gap: 12px; padding-inline: 4px; }
@@ -549,6 +612,7 @@
       <a href="#tarifs">Tarifs</a>
       <a href="#avis">Avis</a>
       <a href="#chantiers">Chantiers</a>
+      <a href="#test">Le test</a>
       <a href="#detecteur">Le détecteur</a>
       <a href="#methode">Méthode</a>
       <a href="#faq">Questions</a>
@@ -594,6 +658,13 @@
       </div>
     </div>
   </section>
+
+  <div class="band" aria-hidden="true">
+    <div class="track" id="track">
+      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
+      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
+    </div>
+  </div>
 
   <!-- Services et tarifs : chaque prestation avec son prix (380 € TTC la recherche, le reste sur devis, prix donnés par LOC FUITE EAU) -->
   <section id="tarifs">
@@ -704,6 +775,49 @@
     </div>
   </section>
 
+  <!-- Outil : le test de fuite -->
+  <section id="test" class="sec-ice">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Outil gratuit</span>
+        <h2>Fuite cachée ? Faites le test en une minute.</h2>
+        <p class="lead">Cochez ce que vous constatez chez vous. Le résultat s'affiche tout de suite.</p>
+      </div>
+      <div class="test-grid">
+        <div class="sym-list">
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Ma facture d'eau a augmenté sans raison</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="3"><span class="sw"></span>Le compteur tourne alors que tout est fermé</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Tache d'humidité, moisissure ou peinture qui cloque</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Bruit d'écoulement alors que personne n'utilise l'eau</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Zone du jardin anormalement humide ou affaissée</button>
+          <button class="sym" type="button" aria-pressed="false" data-w="1"><span class="sw"></span>Moins de pression aux robinets qu'avant</button>
+          <div class="live" aria-hidden="true"><span id="liveTxt">Risque faible · Aucun signe pour l'instant</span><a href="#resultat">Résultat ↓</a></div>
+        </div>
+        <div class="result" id="resultat" aria-live="polite">
+          <svg class="gauge" viewBox="0 0 220 128" aria-hidden="true">
+            <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#2D7CFF"/><stop offset=".55" stop-color="#66A9FF"/><stop offset="1" stop-color="#FF7A45"/></linearGradient></defs>
+            <path class="g-track" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke-width="14" stroke-linecap="round"/>
+            <path id="arc" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke="url(#gg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
+            <g id="needle" class="needle" style="transform:rotate(-90deg)"><line x1="110" y1="110" x2="110" y2="42" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="9"/></g>
+          </svg>
+          <span class="lvl" id="lvl" data-l="ok">Risque faible</span>
+          <h3 id="verdict">Aucun signe pour l'instant</h3>
+          <p id="advice">Cochez les signes que vous constatez.</p>
+          <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>En parler au 06 70 15 09 04</a>
+        </div>
+      </div>
+
+      <div class="meter">
+        <h3>Le test du compteur, à faire chez vous</h3>
+        <div class="meter-grid">
+          <div class="ms"><span class="n">01</span><h4>Fermez tous les robinets</h4><p>Aucun appareil en marche : lave-linge, lave-vaisselle, chasse d'eau.</p></div>
+          <div class="ms"><span class="n">02</span><h4>Relevez le compteur</h4><p>Notez tous les chiffres ou prenez-le simplement en photo.</p></div>
+          <div class="ms"><span class="n">03</span><h4>Attendez 30 minutes</h4><p>N'utilisez pas d'eau pendant ce temps, puis relevez à nouveau le compteur. Si les chiffres ont bougé, l'eau s'échappe quelque part.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Le détecteur interactif : après l'essentiel (prix, avis, photos), il introduit la méthode -->
   <section id="detecteur" class="sec-mid">
     <div class="wrap det-grid">
@@ -807,7 +921,7 @@
     </div>
   </section>
 
-  <!-- Questions : le test du compteur y devient une simple réponse -->
+  <!-- Questions -->
   <section id="faq" class="sec-mid">
     <div class="wrap">
       <div class="faq">
@@ -815,10 +929,6 @@
           <span class="eyebrow">Questions fréquentes</span>
           <h2>Les réponses avant d'appeler.</h2>
         </div>
-        <details>
-          <summary>Comment savoir si j'ai une fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
-          <div class="ans"><p>Faites le test du compteur : fermez tous les robinets et vérifiez qu'aucun appareil ne fonctionne (lave-linge, lave-vaisselle, chasse d'eau). Notez les chiffres du compteur, attendez 30 minutes sans utiliser d'eau, puis relevez-le à nouveau. Si les chiffres ont bougé, l'eau s'échappe quelque part.</p><small>Autres signes : une facture qui augmente sans raison, une tache d'humidité, un bruit d'écoulement ou une zone du jardin anormalement humide.</small></div>
-        </details>
         <details>
           <summary>Qui paie la recherche de fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
           <div class="ans"><p>Quand une fuite provoque un dégât des eaux, la recherche de fuite est souvent prise en charge par l'assurance habitation de l'occupant du logement (convention IRSI). Chaque contrat est différent : vérifiez le vôtre ou demandez à votre assureur. Après l'intervention, vous recevez un rapport à lui transmettre.</p><small>Information générale, à vérifier selon votre contrat.</small></div>
@@ -1071,6 +1181,30 @@
   addEventListener('resize', () => { setMode(); if (isAuto()) fillTo(cur); onScroll(); });
   update();
 
+  // Bandeau défilant : il accélère et change de sens avec le défilement
+  const band = $('.band'), track = $('#track');
+  if (band && track && !reduce) {
+    let x = 0, half = 0, run = false, dir = -1;
+    const measure = () => { half = track.scrollWidth / 2; };
+    measure();
+    addEventListener('resize', measure);
+    if (document.fonts) document.fonts.ready.then(measure);
+    const loop = () => {
+      if (!run) return;
+      if (vel) dir = vel > 0 ? -1 : 1;
+      const sp = .55 + Math.min(Math.abs(vel) * .35, 10);
+      vel *= .9;
+      x += dir * sp;
+      if (half) { if (x <= -half) x += half; if (x > 0) x -= half; }
+      track.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+      requestAnimationFrame(loop);
+    };
+    new IntersectionObserver(([e]) => {
+      const was = run; run = e.isIntersecting;
+      if (run && !was) requestAnimationFrame(loop);
+    }).observe(band);
+  }
+
   // Photo d'accueil : inclinaison 3D et ondes comme sur l'eau
   const card = $('#card3d'), ph = $('#heroPh');
   if (card && fine && !reduce) {
@@ -1210,6 +1344,43 @@
   // Date du rapport (écran de la méthode)
   const dd = $('#docDate');
   if (dd) try { dd.textContent = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Paris' }).format(new Date()); } catch (e) {}
+
+  // Le test de fuite
+  const syms = $$('.sym');
+  const arc = $('#arc'), needle = $('#needle'), verdict = $('#verdict'), advice = $('#advice'), lvl = $('#lvl'), liveTxt = $('#liveTxt'), live = $('.live');
+  if (arc) {
+    const AL = arc.getTotalLength();
+    arc.style.strokeDasharray = AL;
+    arc.style.strokeDashoffset = AL;
+    const levels = [
+      { max: 0, l: 'ok', t: "Aucun signe pour l'instant", a: "Bonne nouvelle. Faites tout de même le test du compteur une fois par an : une fuite enterrée peut couler des mois sans se voir." },
+      { max: 2, l: 'low', t: "Rien d'alarmant, restez attentif", a: "Ce signe seul ne suffit pas pour conclure. Faites le test du compteur ci-dessous : s'il tourne alors que tout est fermé, appelez-nous." },
+      { max: 4, l: 'mid', t: 'Fuite possible', a: "Ce que vous constatez mérite une vérification. Une recherche non destructive permet d'en avoir le cœur net, sans ouvrir au hasard." },
+      { max: 99, l: 'high', t: 'Fuite probable', a: "Les signes sont nets. Chaque jour, l'eau perdue se paie sur la facture et peut abîmer votre logement : faites localiser la fuite rapidement." }
+    ];
+    const labels = { ok: 'Risque faible', low: 'À surveiller', mid: 'Risque sérieux', high: 'Risque élevé' };
+    const colors = { ok: 'var(--ok)', low: 'var(--blue-2)', mid: 'var(--gold)', high: 'var(--hot)' };
+    const update = () => {
+      const s = syms.reduce((n, b) => n + (b.getAttribute('aria-pressed') === 'true' ? +b.dataset.w : 0), 0);
+      const v = clamp(s / 8, 0, 1);
+      arc.style.strokeDashoffset = AL * (1 - v);
+      needle.style.transform = `rotate(${(-90 + 180 * v).toFixed(1)}deg)`;
+      const L = levels.find(x => s <= x.max);
+      verdict.textContent = L.t;
+      advice.textContent = L.a;
+      lvl.dataset.l = L.l;
+      lvl.textContent = labels[L.l];
+      if (liveTxt) liveTxt.textContent = labels[L.l] + ' · ' + L.t;
+      if (live) live.style.color = colors[L.l];
+    };
+    syms.forEach(b => b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); vib(10); }
+      update();
+    }));
+    update();
+  }
 
   // Chantiers : pastille glissante et fondu entre les photos
   $$('.ch').forEach(ch => {
