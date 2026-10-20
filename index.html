@@ -166,6 +166,10 @@
   .trust { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 30px; color: var(--muted); font-size: 14px; }
   .trust span { display: inline-flex; align-items: center; gap: 8px; }
   .trust .i { width: 17px; height: 17px; color: var(--blue-2); }
+  /* Le prix dès l'accueil : c'est la question que tout le monde se pose */
+  .hero-price { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: -10px 0 22px; padding: 12px 18px; border-radius: 14px; background: rgba(45,124,255,.12); border: 1px solid rgba(102,169,255,.35); color: var(--muted); font-size: 14.5px; text-decoration: none; transition: border-color .25s, background .25s; }
+  .hero-price:hover { border-color: var(--blue-2); background: rgba(45,124,255,.18); }
+  .hero-price strong { font: 800 22px/1 var(--f-display); color: var(--white); }
   .stars { color: var(--gold); letter-spacing: 1px; }
 
   .visual { perspective: 1400px; }
@@ -191,13 +195,6 @@
   .c2 { top: 40%; right: -30px; animation-delay: -2.4s; }
   .c3 { bottom: 26px; left: -20px; animation-delay: -4.6s; }
   @keyframes float { 50% { translate: 0 -7px; } }
-
-  /* Bandeau bleu vif, piloté par la vitesse de défilement */
-  .band { position: relative; z-index: 1; overflow: hidden; background: linear-gradient(90deg, var(--brand-1), var(--brand-2) 50%, var(--brand-1)); padding-block: 20px; color: var(--white); }
-  .track { display: flex; align-items: center; width: max-content; will-change: transform; }
-  .track span { font: 800 clamp(26px, 4vw, 44px)/1.05 var(--f-display); letter-spacing: -.02em; padding-inline: 24px; white-space: nowrap; }
-  .track span.o { color: transparent; -webkit-text-stroke: 1.2px rgba(255,255,255,.9); }
-  .track svg { width: 20px; height: 26px; flex: none; color: rgba(255,255,255,.75); }
 
   /* Le détecteur */
   .det-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 60px; align-items: center; }
@@ -300,67 +297,6 @@
   .mstep h3 { font-size: clamp(22px, 2.6vw, 32px); margin-bottom: 10px; }
   .mstep p { color: var(--muted); margin: 0; max-width: 46ch; }
 
-  /* Services : liste à survoler, la photo suit le curseur */
-  .svc-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
-  .row { position: relative; display: grid; grid-template-columns: 52px minmax(0, 1.1fr) minmax(0, 1fr) 44px; align-items: center; column-gap: 24px; row-gap: 0; padding: 28px 8px; border-top: 1px solid var(--line); cursor: default; outline-offset: -2px; }
-  .row::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform: scaleX(0); transform-origin: 0 50%; background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition: transform .7s var(--ease); z-index: 1; }
-  .row:hover::after, .row.open::after { transform: scaleX(1); }
-  .row .ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(45,124,255,.16); color: var(--blue-2); transition: background .4s, color .4s, rotate .5s var(--ease); }
-  .row:hover .ic, .row.open .ic { background: var(--blue); color: var(--white); rotate: -8deg; }
-  .row h3 { font-size: clamp(21px, 2.4vw, 30px); transition: transform .5s var(--ease), color .4s; }
-  .row:hover h3 { transform: translateX(10px); color: var(--blue-3); }
-  .row p { color: var(--muted); margin: 0; font-size: 15px; }
-  .row .go { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: background .4s, border-color .4s, rotate .5s var(--ease); }
-  .row:hover .go { background: var(--blue); border-color: var(--blue); rotate: -45deg; }
-  .row-img { grid-column: 1 / -1; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease); }
-  .row-img > div { overflow: hidden; min-height: 0; }
-  .row-img img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 16px; margin-top: 16px; background: var(--panel); }
-  .row.open .row-img { grid-template-rows: 1fr; }
-  .row.open .go { rotate: 90deg; background: var(--blue); border-color: var(--blue); }
-  .svc-float { position: fixed; left: 0; top: 0; z-index: 40; width: 300px; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; pointer-events: none; opacity: 0; scale: .7; border: 1px solid var(--line-2); box-shadow: 0 30px 60px -20px rgba(0,8,30,.8); transition: opacity .3s, scale .4s var(--ease); background: var(--panel); }
-  .svc-float.show { opacity: 1; scale: 1; }
-  .svc-float img { width: 100%; height: 100%; object-fit: cover; }
-  .svc-note { color: var(--dim); font-size: 13.5px; margin: 16px 0 0; }
-
-  /* Outil : le test de fuite (section claire) */
-  .test-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
-  .sym-list { display: grid; gap: 10px; }
-  .sym { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; padding: 17px 18px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font: 500 15.5px/1.35 var(--f-body); cursor: pointer; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .2s, background .2s, transform .2s var(--ease); -webkit-tap-highlight-color: transparent; }
-  .sym:hover { border-color: var(--line-2); transform: translateX(4px); }
-  .sym:active { transform: scale(.98); }
-  .sym .sw { flex: none; width: 46px; height: 27px; border-radius: 999px; background: var(--line-2); position: relative; transition: background .25s; }
-  .sym .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%; background: var(--white); box-shadow: 0 1px 3px rgba(11,29,68,.3); transition: transform .35s cubic-bezier(.3,1.5,.5,1), width .2s; }
-  .sym:active .sw::after { width: 26px; }
-  .sym .sw::before { content: ""; position: absolute; right: 2px; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 50%; border: 2px solid var(--blue); opacity: 0; pointer-events: none; }
-  .sym.pop .sw::before { animation: pop .6s ease-out; }
-  @keyframes pop { from { opacity: 1; scale: .6; } to { opacity: 0; scale: 2.2; } }
-  .sym[aria-pressed="true"] { border-color: rgba(45,124,255,.55); background: linear-gradient(180deg, rgba(45,124,255,.12), rgba(45,124,255,.04)), var(--panel); }
-  .sym[aria-pressed="true"] .sw { background: var(--blue); }
-  .sym[aria-pressed="true"] .sw::after { transform: translateX(19px); }
-  .sym[aria-pressed="true"]:active .sw::after { transform: translateX(14px); }
-  .live { display: none; }
-  .result { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line-2); border-radius: 22px; padding: 28px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); text-align: center; box-shadow: 0 30px 60px -36px rgba(11,29,68,.45); }
-  .gauge { width: min(260px, 100%); margin: 0 auto 6px; display: block; }
-  .g-track { stroke: var(--line-2); }
-  .needle line { stroke: var(--text); }
-  .needle circle { fill: var(--text); }
-  #needle { transform-box: view-box; transform-origin: 110px 110px; transition: transform .7s cubic-bezier(.3,1.4,.5,1); }
-  #arc { transition: stroke-dashoffset .7s var(--ease); }
-  .lvl { display: inline-block; padding: 5px 12px; border-radius: 999px; font: 700 12px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; background: rgba(14,159,98,.12); color: var(--ok); }
-  .lvl[data-l="low"] { background: rgba(45,124,255,.12); color: var(--blue-2); }
-  .lvl[data-l="mid"] { background: rgba(255,195,77,.18); color: var(--gold); }
-  .lvl[data-l="high"] { background: rgba(255,122,69,.14); color: var(--hot); }
-  .result h3 { font-size: 24px; margin: 14px 0 10px; }
-  .result p { color: var(--muted); font-size: 15px; margin: 0 0 22px; }
-  .meter { margin-top: 56px; }
-  .meter h3 { font-size: 22px; margin-bottom: 18px; }
-  .meter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .ms { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 8px 20px -16px rgba(11,29,68,.4); transition: border-color .3s, transform .4s var(--ease); }
-  .ms:hover { border-color: var(--line-2); transform: translateY(-4px); }
-  .ms .n { font: 800 13px/1 var(--f-display); color: var(--blue-2); letter-spacing: .1em; }
-  .ms h4 { font: 700 17px/1.25 var(--f-display); margin: 10px 0 6px; }
-  .ms p { color: var(--muted); font-size: 14.5px; margin: 0; }
-
   /* Chantiers */
   .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .ch { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
@@ -397,7 +333,7 @@
   .swipe-hint { display: none; color: var(--dim); font-size: 13px; margin: 12px 0 0; }
 
   /* FAQ */
-  .faq { max-width: 880px; margin-top: 88px; }
+  .faq { max-width: 880px; }
   .faq details { border-bottom: 1px solid var(--line); }
   .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 0; font: 700 18.5px/1.35 var(--f-display); transition: color .25s, padding .35s var(--ease); }
   .faq summary:hover { color: var(--blue-3); padding-left: 8px; }
@@ -481,11 +417,10 @@
 
   @media (max-width: 1020px) {
     .menu { display: none; }
-    .hero-grid, .det-grid, .test-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
+    .hero-grid, .det-grid, .ct-grid, .meth { grid-template-columns: 1fr; }
     .hero-grid { gap: 48px; }
     .det-grid { gap: 36px; }
     .det-grid .device { order: 2; }
-    .result { position: static; }
     .visual { max-width: 640px; }
     .meth { gap: 28px; }
     .screen-wrap { max-width: 560px; }
@@ -496,13 +431,20 @@
     section { padding-block: 64px; }
     .hero { padding-block: 32px 56px; }
     /* Sur téléphone, la photo est petite : on ne garde que « au centimètre près », en haut,
-       pour laisser voir le repère orange posé sur le point de fuite (les deux autres messages défilent juste en dessous) */
+       pour laisser voir le repère orange posé sur le point de fuite */
     .c1, .c3 { display: none; }
     .c2 { top: 12px; right: auto; left: 50%; transform: translateX(-50%) translateZ(70px); }
     .chip { font-size: 12.5px; padding: 8px 12px 8px 8px; }
     .chip .ico { width: 28px; height: 28px; }
     .chip small { display: none; }
-    .band { padding-block: 14px; }
+    .hero-price { display: flex; }
+    /* Méthode sur téléphone : pas d'écran animé, les 4 étapes en liste simple, toutes lisibles */
+    .screen-wrap { display: none; }
+    .mstep { opacity: 1; cursor: default; }
+    html.auto .mstep { cursor: default; }
+    .mstep::before { background: var(--blue-2); border-color: var(--blue-2); }
+    .msteps::after { transform: none; }
+    .mstep.on::before { scale: 1; }
     .screen { padding: 10px; border-radius: 20px; }
     .scr-top { padding-bottom: 8px; }
     .scr-body { aspect-ratio: 16 / 10; }
@@ -512,20 +454,20 @@
     .doc-lines { display: none; }
     .chk { gap: 8px; }
     .chk li { padding: 9px 12px; font-size: 14px; }
-    .row { grid-template-columns: 44px minmax(0, 1fr) 36px; column-gap: 14px; padding: 20px 2px; cursor: pointer; }
-    .row .ic { width: 44px; height: 44px; border-radius: 13px; }
-    .row p { grid-column: 2 / 4; grid-row: 2; font-size: 14.5px; margin-top: 6px; }
-    .row .go { width: 36px; height: 36px; grid-column: 3; grid-row: 1; }
-    .ch-grid, .meter-grid, .price-grid { grid-template-columns: 1fr; }
-    .price-card { padding: 20px; }
+    .ch-grid, .price-grid { grid-template-columns: 1fr; }
+    /* Cartes de prix plus compactes : l'icône ne reste que sur la carte à 380 € */
+    .price-grid { gap: 10px; }
+    .price-card { padding: 16px 18px; gap: 6px; }
+    .price-card:not(.main) .ic { display: none; }
+    .price-card h3 { font-size: 17px; }
+    .price-card p { font-size: 14px; }
+    .price-card .amount { margin-top: 4px; padding-top: 10px; }
+    .price-card .amount strong.tbd { font-size: 15px; }
     .rev-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; margin-inline: -16px; padding-inline: 16px; padding-bottom: 6px; scrollbar-width: none; }
     .rev-grid::-webkit-scrollbar { display: none; }
     .rev { flex: 0 0 84%; scroll-snap-align: center; }
     .rev:nth-child(2) { margin-top: 0; }
     .swipe-hint { display: block; }
-    .faq { margin-top: 64px; }
-    .live { display: flex; position: sticky; bottom: calc(env(safe-area-inset-bottom, 0px) + 86px); z-index: 5; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line-2); font-size: 14px; font-weight: 600; box-shadow: 0 18px 30px -16px rgba(11,29,68,.5); }
-    .live a { color: var(--blue-2); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
     .form { grid-template-columns: 1fr; padding: 24px; }
     .ct-card { padding: 28px 24px; }
     .hud { gap: 12px; padding-inline: 4px; }
@@ -586,12 +528,12 @@
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="LOC FUITE EAU, accueil"><svg><use href="#logo"/></svg><span>LOC <b>FUITE</b> EAU</span></a>
     <nav class="menu" aria-label="Sections">
+      <a href="#avis">Avis</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#chantiers">Chantiers</a>
       <a href="#detecteur">Le détecteur</a>
       <a href="#methode">Méthode</a>
-      <a href="#services">Services</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#test">Le test</a>
-      <a href="#avis">Avis</a>
+      <a href="#faq">Questions</a>
       <a href="#contact">Contact</a>
     </nav>
     <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg><span>Appeler<span class="long"> · 06 70 15 09 04</span></span></a>
@@ -607,6 +549,7 @@
         <span class="eyebrow">Recherche de fuite non destructive · Gironde</span>
         <h1>Votre fuite d'eau, trouvée au centimètre près. <span class="accent">Sans tout casser.</span></h1>
         <p class="lead">Détecter, localiser, accompagner : avec une caméra d'inspection et des appareils de détection non destructifs, on trouve l'origine exacte de la fuite avant d'ouvrir quoi que ce soit.</p>
+        <a class="hero-price" href="#tarifs"><strong>380 € TTC</strong><span>la recherche de fuite sans destruction</span></a>
         <div class="cta-row">
           <a class="btn btn-primary ring" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Appeler le 06 70 15 09 04</a>
           <a class="btn btn-ghost" href="#contact">Décrire mon problème<svg class="i i-arrow"><use href="#ic-arrow"/></svg></a>
@@ -633,15 +576,114 @@
     </div>
   </section>
 
-  <div class="band" aria-hidden="true">
-    <div class="track" id="track">
-      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
-      <span>Sans destruction</span><svg><use href="#ic-drop"/></svg><span class="o">Au centimètre près</span><svg><use href="#ic-drop"/></svg><span>Caméra d'inspection</span><svg><use href="#ic-drop"/></svg><span class="o">Rapport d'intervention</span><svg><use href="#ic-drop"/></svg><span>Toute la Gironde</span><svg><use href="#ic-drop"/></svg>
+  <!-- Avis : juste après l'accueil, c'est ce qui rassure le plus -->
+  <section id="avis" class="sec-mid">
+    <div class="wrap">
+      <div class="rev-head">
+        <div class="head">
+          <span class="eyebrow">Avis clients</span>
+          <h2>Ils nous ont fait confiance.</h2>
+        </div>
+        <a class="score" href="https://www.google.com/maps/place/LOC+FUITE+EAU/@44.865298,-0.5216811,17z/data=!4m6!3m5!1s0x6ae4f571f1b55f99:0x76924126b068f9fd!8m2!3d44.865298!4d-0.5216811!16s%2Fg%2F11zx__0_sk" target="_blank" rel="noopener">
+          <b>5,0</b><span><span class="stars">★★★★★</span>Avis Google<br>Voir sur Google Maps</span>
+        </a>
+      </div>
+      <div class="rev-grid">
+        <figure class="rev" data-par="0.03">
+          <q>Fuite d'eau détectée en moins de 15 minutes ! Du matériel de professionnel, rien à dire. Merci à vous.</q>
+          <figcaption class="who"><span class="av">A</span><span><strong>Ay I.</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+        <figure class="rev" data-par="-0.03">
+          <q>Merci à Loc Fuite Eau d'avoir détecté ma fuite au centimètre près, donc je n'ai pas eu besoin de faire une grande ouverture du sol ! Sur mon réseau extérieur de canalisation, je recommande.</q>
+          <figcaption class="who"><span class="av">S</span><span><strong>Sifeddine E.</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+        <figure class="rev" data-par="0.02">
+          <q>J'avais une fuite d'eau et le technicien a su être réactif pour la détecter. L'avantage, c'est qu'il propose même de faire les réparations. Je recommande à 100 %.</q>
+          <figcaption class="who"><span class="av">Y</span><span><strong>Ysra</strong>Avis Google · octobre 2026</span></figcaption>
+        </figure>
+      </div>
+      <p class="swipe-hint">Faites glisser pour lire les autres avis →</p>
     </div>
-  </div>
+  </section>
 
-  <!-- Le détecteur interactif -->
-  <section id="detecteur">
+  <!-- Services et tarifs : chaque prestation avec son prix (380 € TTC la recherche, le reste sur devis, prix donnés par LOC FUITE EAU) -->
+  <section id="tarifs">
+    <div class="wrap">
+      <div class="head-split">
+        <div><span class="eyebrow">Services et tarifs</span><h2>Ce que l'on fait, et à quel prix.</h2></div>
+        <p class="lead">Maisons, appartements, jardins, allées : basés à Lormont, nous intervenons dans toute la Gironde. La recherche de fuite est à prix annoncé, le reste sur devis.</p>
+      </div>
+      <div class="price-grid">
+        <article class="price-card main">
+          <span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span>
+          <h3>Recherche de fuite sans destruction</h3>
+          <p>Diagnostic, détection et marquage du point de fuite au centimètre près, sans casser le carrelage, la dalle ou les murs.</p>
+          <div class="amount"><small>Prix TTC</small><strong>380 €</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-pipe"/></svg></span>
+          <h3>Canalisations et réseaux enterrés</h3>
+          <p>On retrouve le tracé de vos canalisations extérieures et le point où elles fuient.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-cam"/></svg></span>
+          <h3>Inspection par caméra</h3>
+          <p>On filme l'intérieur des canalisations pour voir leur état, sans rien démonter.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+        <article class="price-card">
+          <span class="ic"><svg class="i"><use href="#ic-doc"/></svg></span>
+          <h3>Rapport pour l'assurance</h3>
+          <p>Compte rendu de l'intervention, à transmettre à votre assureur.</p>
+          <div class="amount"><strong class="tbd">Sur devis</strong></div>
+        </article>
+      </div>
+      <div class="price-foot">
+        <p>Prix toutes taxes comprises. Pour un devis, un simple appel suffit.</p>
+        <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Demander un devis · 06 70 15 09 04</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chantiers -->
+  <section id="chantiers">
+    <div class="wrap">
+      <div class="head-split">
+        <div><span class="eyebrow">Sur le terrain</span><h2>Des chantiers, pas des promesses.</h2></div>
+        <p class="lead">Photos réelles d'interventions de LOC FUITE EAU.</p>
+      </div>
+      <div class="ch-grid">
+        <article class="ch" data-par="-0.025">
+          <div class="stage">
+            <span class="lab">Avant</span>
+            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/allee-ouverture.webp" alt="Ouverture ciblée dans l'allée, canalisation dégagée au point de fuite">
+            <img loading="lazy" decoding="async" width="800" height="1067" src="img/allee-apres.webp" alt="La même allée remise en état après l'intervention, gravier en place">
+          </div>
+          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
+            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="Une seule ouverture, à l'endroit exact repéré pendant la détection.">Avant</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="L'allée remise en état : gravier en place, plus rien ne se voit.">Après</button>
+          </div></div>
+          <div class="cap"><h3>Allée gravillonnée</h3><p>Une seule ouverture, à l'endroit exact repéré pendant la détection.</p></div>
+        </article>
+        <article class="ch" data-par="0.025">
+          <div class="stage">
+            <span class="lab">Avant</span>
+            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-ouverture.webp" alt="Ouverture limitée dans un jardin, au point de fuite">
+            <img loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-apres.webp" alt="Le même jardin, terrain rebouché après l'intervention">
+          </div>
+          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
+            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="L'ouverture se limite à la zone de la fuite, repérée avant de creuser.">Avant</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="Terrain rebouché une fois l'intervention terminée.">Après</button>
+          </div></div>
+          <div class="cap"><h3>Jardin</h3><p>L'ouverture se limite à la zone de la fuite, repérée avant de creuser.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le détecteur interactif : après l'essentiel (prix, avis, photos), il introduit la méthode -->
+  <section id="detecteur" class="sec-mid">
     <div class="wrap det-grid">
       <div class="device">
         <div class="dev-top"><span class="rec" id="detState">Écoute en cours</span><span>LFE · Détecteur</span></div>
@@ -693,7 +735,7 @@
   </section>
 
   <!-- Méthode -->
-  <section id="methode" class="sec-mid">
+  <section id="methode">
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">La méthode</span>
@@ -743,200 +785,18 @@
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services">
+  <!-- Questions : le test du compteur y devient une simple réponse -->
+  <section id="faq" class="sec-mid">
     <div class="wrap">
-      <div class="head-split">
-        <div><span class="eyebrow">Nos services</span><h2>Ce que l'on fait pour vous.</h2></div>
-        <p class="lead">Maisons, appartements, jardins, allées : basés à Lormont, nous intervenons dans toute la Gironde.</p>
-      </div>
-      <ul class="svc-list">
-        <li class="row" tabindex="0" data-img="img/technicien.webp" data-pos="85% 75%">
-          <span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span>
-          <h3>Fuites d'eau sans destruction</h3>
-          <p>On confirme la fuite avec des appareils non destructifs, sans casser le carrelage, la dalle ou les murs pour la chercher.</p>
-          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
-          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/technicien.webp" style="object-position:85% 75%" alt="Détecteur de fuite et écran de contrôle posés dans l'herbe"></div></div>
-        </li>
-        <li class="row" tabindex="0" data-img="img/canalisation-1.webp">
-          <span class="ic"><svg class="i"><use href="#ic-pipe"/></svg></span>
-          <h3>Canalisations et réseaux enterrés</h3>
-          <p>On retrouve le tracé de vos canalisations extérieures et le point où elles fuient.</p>
-          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
-          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/canalisation-1.webp" alt="Canalisation enterrée dégagée dans un jardin"></div></div>
-        </li>
-        <li class="row" tabindex="0" data-img="img/canalisation-2.webp">
-          <span class="ic"><svg class="i"><use href="#ic-target"/></svg></span>
-          <h3>Localisation précise</h3>
-          <p>Le point de fuite est repéré au centimètre près : l'ouverture se limite à cet endroit.</p>
-          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
-          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/canalisation-2.webp" alt="Ouverture ciblée sur une canalisation au point de fuite"></div></div>
-        </li>
-        <li class="row" tabindex="0" data-img="img/camera.webp">
-          <span class="ic"><svg class="i"><use href="#ic-cam"/></svg></span>
-          <h3>Inspection par caméra</h3>
-          <p>On filme l'intérieur des canalisations pour voir leur état sans rien démonter.</p>
-          <span class="go"><svg class="i"><use href="#ic-arrow"/></svg></span>
-          <div class="row-img"><div><img loading="lazy" decoding="async" width="800" height="500" src="img/camera.webp" alt="Écran de caméra d'inspection montrant l'intérieur d'une canalisation"></div></div>
-        </li>
-      </ul>
-      <p class="svc-note" id="svcNote">Survolez un service pour voir la photo du chantier.</p>
-    </div>
-    <div class="svc-float" aria-hidden="true"><img alt=""></div>
-  </section>
-
-  <!-- Tarifs : recherche de fuite à 380 € TTC, le reste sur devis (prix donnés par LOC FUITE EAU) -->
-  <section id="tarifs">
-    <div class="wrap">
-      <div class="head-split">
-        <div><span class="eyebrow">Tarifs</span><h2>Des prix clairs, avant de venir.</h2></div>
-        <p class="lead">Un prix annoncé pour la recherche de fuite, un devis pour le reste, selon votre installation.</p>
-      </div>
-      <div class="price-grid">
-        <article class="price-card main">
-          <span class="ic"><svg class="i"><use href="#ic-shield"/></svg></span>
-          <h3>Recherche de fuite sans destruction</h3>
-          <p>Diagnostic, détection et marquage du point de fuite au centimètre près.</p>
-          <div class="amount"><small>Prix TTC</small><strong>380 €</strong></div>
-        </article>
-        <article class="price-card">
-          <span class="ic"><svg class="i"><use href="#ic-pipe"/></svg></span>
-          <h3>Canalisations enterrées</h3>
-          <p>Tracé de vos canalisations extérieures et localisation de la fuite.</p>
-          <div class="amount"><strong class="tbd">Sur devis</strong></div>
-        </article>
-        <article class="price-card">
-          <span class="ic"><svg class="i"><use href="#ic-cam"/></svg></span>
-          <h3>Inspection par caméra</h3>
-          <p>Inspection filmée de l'intérieur des canalisations, sans rien démonter.</p>
-          <div class="amount"><strong class="tbd">Sur devis</strong></div>
-        </article>
-        <article class="price-card">
-          <span class="ic"><svg class="i"><use href="#ic-doc"/></svg></span>
-          <h3>Rapport pour l'assurance</h3>
-          <p>Compte rendu de l'intervention, à transmettre à votre assureur.</p>
-          <div class="amount"><strong class="tbd">Sur devis</strong></div>
-        </article>
-      </div>
-      <div class="price-foot">
-        <p>Prix toutes taxes comprises. Pour un devis, un simple appel suffit.</p>
-        <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>Demander un devis · 06 70 15 09 04</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Outil : le test de fuite -->
-  <section id="test" class="sec-ice">
-    <div class="wrap">
-      <div class="head">
-        <span class="eyebrow">Outil gratuit</span>
-        <h2>Fuite cachée ? Faites le test en une minute.</h2>
-        <p class="lead">Cochez ce que vous constatez chez vous. Le résultat s'affiche tout de suite.</p>
-      </div>
-      <div class="test-grid">
-        <div class="sym-list">
-          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Ma facture d'eau a augmenté sans raison</button>
-          <button class="sym" type="button" aria-pressed="false" data-w="3"><span class="sw"></span>Le compteur tourne alors que tout est fermé</button>
-          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Tache d'humidité, moisissure ou peinture qui cloque</button>
-          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Bruit d'écoulement alors que personne n'utilise l'eau</button>
-          <button class="sym" type="button" aria-pressed="false" data-w="2"><span class="sw"></span>Zone du jardin anormalement humide ou affaissée</button>
-          <button class="sym" type="button" aria-pressed="false" data-w="1"><span class="sw"></span>Moins de pression aux robinets qu'avant</button>
-          <div class="live" aria-hidden="true"><span id="liveTxt">Risque faible · Aucun signe pour l'instant</span><a href="#resultat">Résultat ↓</a></div>
-        </div>
-        <div class="result" id="resultat" aria-live="polite">
-          <svg class="gauge" viewBox="0 0 220 128" aria-hidden="true">
-            <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#2D7CFF"/><stop offset=".55" stop-color="#66A9FF"/><stop offset="1" stop-color="#FF7A45"/></linearGradient></defs>
-            <path class="g-track" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke-width="14" stroke-linecap="round"/>
-            <path id="arc" d="M20 110A90 90 0 0 1 200 110" fill="none" stroke="url(#gg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
-            <g id="needle" class="needle" style="transform:rotate(-90deg)"><line x1="110" y1="110" x2="110" y2="42" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="9"/></g>
-          </svg>
-          <span class="lvl" id="lvl" data-l="ok">Risque faible</span>
-          <h3 id="verdict">Aucun signe pour l'instant</h3>
-          <p id="advice">Cochez les signes que vous constatez.</p>
-          <a class="btn btn-primary" href="tel:+33670150904"><svg class="i i-phone"><use href="#ic-phone"/></svg>En parler au 06 70 15 09 04</a>
-        </div>
-      </div>
-
-      <div class="meter">
-        <h3>Le test du compteur, à faire chez vous</h3>
-        <div class="meter-grid">
-          <div class="ms"><span class="n">01</span><h4>Fermez tous les robinets</h4><p>Aucun appareil en marche : lave-linge, lave-vaisselle, chasse d'eau.</p></div>
-          <div class="ms"><span class="n">02</span><h4>Relevez le compteur</h4><p>Notez tous les chiffres ou prenez-le simplement en photo.</p></div>
-          <div class="ms"><span class="n">03</span><h4>Attendez 30 minutes</h4><p>N'utilisez pas d'eau pendant ce temps, puis relevez à nouveau le compteur. Si les chiffres ont bougé, l'eau s'échappe quelque part.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Chantiers -->
-  <section id="chantiers">
-    <div class="wrap">
-      <div class="head-split">
-        <div><span class="eyebrow">Sur le terrain</span><h2>Des chantiers, pas des promesses.</h2></div>
-        <p class="lead">Photos réelles d'interventions de LOC FUITE EAU.</p>
-      </div>
-      <div class="ch-grid">
-        <article class="ch" data-par="-0.025">
-          <div class="stage">
-            <span class="lab">Avant</span>
-            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/allee-ouverture.webp" alt="Ouverture ciblée dans l'allée, canalisation dégagée au point de fuite">
-            <img loading="lazy" decoding="async" width="800" height="1067" src="img/allee-apres.webp" alt="La même allée remise en état après l'intervention, gravier en place">
-          </div>
-          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
-            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="Une seule ouverture, à l'endroit exact repéré pendant la détection.">Avant</button>
-            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="L'allée remise en état : gravier en place, plus rien ne se voit.">Après</button>
-          </div></div>
-          <div class="cap"><h3>Allée gravillonnée</h3><p>Une seule ouverture, à l'endroit exact repéré pendant la détection.</p></div>
-        </article>
-        <article class="ch" data-par="0.025">
-          <div class="stage">
-            <span class="lab">Avant</span>
-            <img class="on" loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-ouverture.webp" alt="Ouverture limitée dans un jardin, au point de fuite">
-            <img loading="lazy" decoding="async" width="800" height="1067" src="img/jardin-apres.webp" alt="Le même jardin, terrain rebouché après l'intervention">
-          </div>
-          <div class="tabs-wrap"><div class="tabs" role="tablist"><span class="ind"></span>
-            <button class="tab" type="button" role="tab" aria-selected="true" data-cap="L'ouverture se limite à la zone de la fuite, repérée avant de creuser.">Avant</button>
-            <button class="tab" type="button" role="tab" aria-selected="false" data-cap="Terrain rebouché une fois l'intervention terminée.">Après</button>
-          </div></div>
-          <div class="cap"><h3>Jardin</h3><p>L'ouverture se limite à la zone de la fuite, repérée avant de creuser.</p></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Avis + questions -->
-  <section id="avis" class="sec-mid">
-    <div class="wrap">
-      <div class="rev-head">
-        <div class="head">
-          <span class="eyebrow">Avis clients</span>
-          <h2>Ils nous ont fait confiance.</h2>
-        </div>
-        <a class="score" href="https://www.google.com/maps/place/LOC+FUITE+EAU/@44.865298,-0.5216811,17z/data=!4m6!3m5!1s0x6ae4f571f1b55f99:0x76924126b068f9fd!8m2!3d44.865298!4d-0.5216811!16s%2Fg%2F11zx__0_sk" target="_blank" rel="noopener">
-          <b>5,0</b><span><span class="stars">★★★★★</span>Avis Google<br>Voir sur Google Maps</span>
-        </a>
-      </div>
-      <div class="rev-grid">
-        <figure class="rev" data-par="0.03">
-          <q>Fuite d'eau détectée en moins de 15 minutes ! Du matériel de professionnel, rien à dire. Merci à vous.</q>
-          <figcaption class="who"><span class="av">A</span><span><strong>Ay I.</strong>Avis Google · octobre 2026</span></figcaption>
-        </figure>
-        <figure class="rev" data-par="-0.03">
-          <q>Merci à Loc Fuite Eau d'avoir détecté ma fuite au centimètre près, donc je n'ai pas eu besoin de faire une grande ouverture du sol ! Sur mon réseau extérieur de canalisation, je recommande.</q>
-          <figcaption class="who"><span class="av">S</span><span><strong>Sifeddine E.</strong>Avis Google · octobre 2026</span></figcaption>
-        </figure>
-        <figure class="rev" data-par="0.02">
-          <q>J'avais une fuite d'eau et le technicien a su être réactif pour la détecter. L'avantage, c'est qu'il propose même de faire les réparations. Je recommande à 100 %.</q>
-          <figcaption class="who"><span class="av">Y</span><span><strong>Ysra</strong>Avis Google · octobre 2026</span></figcaption>
-        </figure>
-      </div>
-      <p class="swipe-hint">Faites glisser pour lire les autres avis →</p>
-
-      <div class="faq" id="faq">
+      <div class="faq">
         <div class="head">
           <span class="eyebrow">Questions fréquentes</span>
           <h2>Les réponses avant d'appeler.</h2>
         </div>
+        <details>
+          <summary>Comment savoir si j'ai une fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
+          <div class="ans"><p>Faites le test du compteur : fermez tous les robinets et vérifiez qu'aucun appareil ne fonctionne (lave-linge, lave-vaisselle, chasse d'eau). Notez les chiffres du compteur, attendez 30 minutes sans utiliser d'eau, puis relevez-le à nouveau. Si les chiffres ont bougé, l'eau s'échappe quelque part.</p><small>Autres signes : une facture qui augmente sans raison, une tache d'humidité, un bruit d'écoulement ou une zone du jardin anormalement humide.</small></div>
+        </details>
         <details>
           <summary>Qui paie la recherche de fuite ?<span class="pm"><svg class="i"><use href="#ic-plus"/></svg></span></summary>
           <div class="ans"><p>Quand une fuite provoque un dégât des eaux, la recherche de fuite est souvent prise en charge par l'assurance habitation de l'occupant du logement (convention IRSI). Chaque contrat est différent : vérifiez le vôtre ou demandez à votre assureur. Après l'intervention, vous recevez un rapport à lui transmettre.</p><small>Information générale, à vérifier selon votre contrat.</small></div>
@@ -1189,30 +1049,6 @@
   addEventListener('resize', () => { setMode(); if (isAuto()) fillTo(cur); onScroll(); });
   update();
 
-  // Bandeau défilant : il accélère et change de sens avec le défilement
-  const band = $('.band'), track = $('#track');
-  if (band && track && !reduce) {
-    let x = 0, half = 0, run = false, dir = -1;
-    const measure = () => { half = track.scrollWidth / 2; };
-    measure();
-    addEventListener('resize', measure);
-    if (document.fonts) document.fonts.ready.then(measure);
-    const loop = () => {
-      if (!run) return;
-      if (vel) dir = vel > 0 ? -1 : 1;
-      const sp = .55 + Math.min(Math.abs(vel) * .35, 10);
-      vel *= .9;
-      x += dir * sp;
-      if (half) { if (x <= -half) x += half; if (x > 0) x -= half; }
-      track.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
-      requestAnimationFrame(loop);
-    };
-    new IntersectionObserver(([e]) => {
-      const was = run; run = e.isIntersecting;
-      if (run && !was) requestAnimationFrame(loop);
-    }).observe(band);
-  }
-
   // Photo d'accueil : inclinaison 3D et ondes comme sur l'eau
   const card = $('#card3d'), ph = $('#heroPh');
   if (card && fine && !reduce) {
@@ -1352,88 +1188,6 @@
   // Date du rapport (écran de la méthode)
   const dd = $('#docDate');
   if (dd) try { dd.textContent = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Paris' }).format(new Date()); } catch (e) {}
-
-  // Services : la photo du chantier suit le curseur, ou s'ouvre au toucher
-  const rows = $$('.row'), flt = $('.svc-float'), fimg = flt && $('img', flt);
-  if (!fine) { const n = $('#svcNote'); if (n) n.textContent = 'Touchez un service pour voir la photo du chantier.'; }
-  if (flt && fine && !reduce) {
-    let tx = 0, ty = 0, x = 0, y = 0, on = false, raf = 0;
-    const loop = () => {
-      const dx = tx - x;
-      x += dx * .22; y += (ty - y) * .22;
-      flt.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -58%) rotate(${clamp(dx * .06, -8, 8).toFixed(2)}deg)`;
-      raf = (on || Math.abs(dx) > .5) ? requestAnimationFrame(loop) : 0;
-    };
-    rows.forEach(row => {
-      const pre = new Image(); pre.src = row.dataset.img;
-      row.addEventListener('pointerenter', e => {
-        fimg.src = row.dataset.img;
-        fimg.style.objectPosition = row.dataset.pos || '50% 50%';
-        if (!flt.classList.contains('show')) { x = tx = e.clientX; y = ty = e.clientY; }
-        on = true; flt.classList.add('show');
-        if (!raf) raf = requestAnimationFrame(loop);
-      });
-      row.addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; });
-      row.addEventListener('pointerleave', () => { on = false; flt.classList.remove('show'); });
-    });
-  }
-  // Les photos des services sont cachées tant qu'une ligne est fermée : on les charge dès que la section approche
-  const svcList = $('.svc-list');
-  if (svcList) new IntersectionObserver(([e], o) => {
-    if (e.isIntersecting) { $$('.row-img img').forEach(im => { im.loading = 'eager'; }); o.disconnect(); }
-  }, { rootMargin: '800px 0px' }).observe(svcList);
-  const toggleRow = row => {
-    const im = $('.row-img img', row);
-    if (im) { im.loading = 'eager'; if (im.decode) im.decode().catch(() => {}); }
-    const open = !row.classList.contains('open');
-    rows.forEach(r => r.classList.remove('open'));
-    row.classList.toggle('open', open);
-  };
-  rows.forEach(row => {
-    row.addEventListener('click', () => { if (fine) return; toggleRow(row); vib(8); });
-    row.addEventListener('keydown', e => {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      e.preventDefault();
-      toggleRow(row);
-    });
-  });
-
-  // Le test de fuite
-  const syms = $$('.sym');
-  const arc = $('#arc'), needle = $('#needle'), verdict = $('#verdict'), advice = $('#advice'), lvl = $('#lvl'), liveTxt = $('#liveTxt'), live = $('.live');
-  if (arc) {
-    const AL = arc.getTotalLength();
-    arc.style.strokeDasharray = AL;
-    arc.style.strokeDashoffset = AL;
-    const levels = [
-      { max: 0, l: 'ok', t: "Aucun signe pour l'instant", a: "Bonne nouvelle. Faites tout de même le test du compteur une fois par an : une fuite enterrée peut couler des mois sans se voir." },
-      { max: 2, l: 'low', t: "Rien d'alarmant, restez attentif", a: "Ce signe seul ne suffit pas pour conclure. Faites le test du compteur ci-dessous : s'il tourne alors que tout est fermé, appelez-nous." },
-      { max: 4, l: 'mid', t: 'Fuite possible', a: "Ce que vous constatez mérite une vérification. Une recherche non destructive permet d'en avoir le cœur net, sans ouvrir au hasard." },
-      { max: 99, l: 'high', t: 'Fuite probable', a: "Les signes sont nets. Chaque jour, l'eau perdue se paie sur la facture et peut abîmer votre logement : faites localiser la fuite rapidement." }
-    ];
-    const labels = { ok: 'Risque faible', low: 'À surveiller', mid: 'Risque sérieux', high: 'Risque élevé' };
-    const colors = { ok: 'var(--ok)', low: 'var(--blue-2)', mid: 'var(--gold)', high: 'var(--hot)' };
-    const update = () => {
-      const s = syms.reduce((n, b) => n + (b.getAttribute('aria-pressed') === 'true' ? +b.dataset.w : 0), 0);
-      const v = clamp(s / 8, 0, 1);
-      arc.style.strokeDashoffset = AL * (1 - v);
-      needle.style.transform = `rotate(${(-90 + 180 * v).toFixed(1)}deg)`;
-      const L = levels.find(x => s <= x.max);
-      verdict.textContent = L.t;
-      advice.textContent = L.a;
-      lvl.dataset.l = L.l;
-      lvl.textContent = labels[L.l];
-      if (liveTxt) liveTxt.textContent = labels[L.l] + ' · ' + L.t;
-      if (live) live.style.color = colors[L.l];
-    };
-    syms.forEach(b => b.addEventListener('click', () => {
-      const on = b.getAttribute('aria-pressed') !== 'true';
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      if (on) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); vib(10); }
-      update();
-    }));
-    update();
-  }
 
   // Chantiers : pastille glissante et fondu entre les photos
   $$('.ch').forEach(ch => {
