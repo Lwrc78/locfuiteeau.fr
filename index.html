@@ -388,6 +388,25 @@
   .ch .cap { padding: 14px 20px 22px; }
   .ch .cap h3 { font-size: 18px; margin-bottom: 6px; }
   .ch .cap p { color: var(--muted); margin: 0; font-size: 15px; min-height: 2.9em; }
+  /* Carrousel de photos : glisser au doigt, flèches ou points */
+  .car-block { margin-top: 40px; }
+  .car-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .car-top h3 { font-size: clamp(20px, 2.2vw, 26px); }
+  .car-nav { display: flex; gap: 8px; }
+  .car-btn { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-2); background: rgba(255,255,255,.05); color: var(--text); cursor: pointer; transition: border-color .2s, background .2s, opacity .2s; }
+  .car-btn:hover { border-color: var(--blue-2); background: rgba(45,124,255,.14); }
+  .car-btn:disabled { opacity: .3; cursor: default; }
+  .car-btn.prev .i { transform: rotate(180deg); }
+  .car { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 3); gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .car::-webkit-scrollbar { display: none; }
+  .slide { margin: 0; scroll-snap-align: start; border-radius: 22px; overflow: hidden; background: var(--panel); border: 1px solid var(--line); }
+  /* height: auto, sinon l'attribut height="800" de l'image l'emporte sur le format 4/5 */
+  .slide img { width: 100%; max-width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; background: var(--panel-2); }
+  .slide figcaption { padding: 14px 18px 18px; color: var(--muted); font-size: 14.5px; line-height: 1.45; }
+  .slide figcaption b { display: block; margin-bottom: 4px; color: var(--text); font: 700 17px/1.3 var(--f-display); }
+  .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+  .car-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px; background: var(--line-2); cursor: pointer; transition: width .3s var(--ease), background .3s; }
+  .car-dots button[aria-current="true"] { width: 26px; background: var(--blue); }
 
   /* Avis */
   .rev-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
@@ -541,6 +560,9 @@
     .chk { gap: 8px; }
     .chk li { padding: 9px 12px; font-size: 14px; }
     .ch-grid, .price-grid, .meter-grid { grid-template-columns: 1fr; }
+    .car-block { margin-top: 28px; }
+    .car-nav { display: none; }
+    .car { grid-auto-columns: 70%; gap: 12px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
     /* Test « Fuite cachée ? » plus compact sur téléphone */
     .sym-list { gap: 8px; }
     .sym { padding: 12px 14px; font-size: 14.5px; gap: 12px; }
@@ -817,6 +839,20 @@
           </div></div>
           <div class="cap"><h3>Jardin</h3><p>L'ouverture se limite à la zone de la fuite, repérée avant de creuser.</p></div>
         </article>
+      </div>
+      <!-- Carrousel : photos de chantier envoyées par Jawad (fuite au pied d'une haie, puis fuite sous l'enrobé) -->
+      <div class="car-block">
+        <div class="car-top">
+          <h3>De la recherche à la réparation</h3>
+          <div class="car-nav"><button class="car-btn prev" id="carPrev" type="button" aria-label="Photo précédente"><svg class="i"><use href="#ic-arrow"/></svg></button><button class="car-btn" id="carNext" type="button" aria-label="Photo suivante"><svg class="i"><use href="#ic-arrow"/></svg></button></div>
+        </div>
+        <div class="car" id="car" tabindex="0" role="region" aria-roledescription="carrousel" aria-label="Photos de chantiers">
+          <figure class="slide"><img loading="lazy" decoding="async" width="600" height="800" src="img/fuite-haie-avant.webp" alt="Pied d’une haie avant l’ouverture, à l’endroit où la fuite a été repérée"><figcaption><b>Avant d’ouvrir</b>L’endroit à creuser est repéré au pied de la haie.</figcaption></figure>
+          <figure class="slide"><img loading="lazy" decoding="async" width="600" height="800" src="img/fuite-haie-fouille.webp" alt="Petite fouille au pied de la haie, tuyau d’eau noir dégagé au fond"><figcaption><b>Fouille au point repéré</b>Un trou limité à la zone de la fuite : le tuyau d’eau est dégagé.</figcaption></figure>
+          <figure class="slide"><img loading="lazy" decoding="async" width="600" height="800" src="img/fuite-manchon-laiton.webp" alt="Tuyau d’eau réparé avec un manchon en laiton au fond de la fouille"><figcaption><b>Réparation</b>Un manchon en laiton est posé sur la partie abîmée du tuyau.</figcaption></figure>
+          <figure class="slide"><img loading="lazy" decoding="async" width="600" height="800" src="img/fuite-enrobe.webp" alt="Enrobé découpé à l’endroit marqué d’une croix jaune, tuyau visible au fond du trou"><figcaption><b>Fuite sous l’enrobé</b>L’enrobé n’est découpé qu’à l’endroit marqué d’une croix.</figcaption></figure>
+        </div>
+        <div class="car-dots" id="carDots"></div>
       </div>
     </div>
   </section>
@@ -1479,6 +1515,45 @@
     if (document.fonts) document.fonts.ready.then(place);
     place();
   });
+
+  // Chantiers : carrousel de photos (glisser au doigt, flèches, points ; un point par position possible)
+  const car = $('#car');
+  if (car) {
+    const slides = $$('.slide', car), dots = $('#carDots'), prev = $('#carPrev'), next = $('#carNext');
+    const go = left => car.scrollTo({ left, behavior: reduce ? 'auto' : 'smooth' });
+    const step = () => slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : car.clientWidth;
+    let pages = 0;
+    const build = () => {
+      const n = Math.max(1, slides.length - Math.max(1, Math.round(car.clientWidth / step())) + 1);
+      if (n === pages) return;
+      pages = n;
+      dots.textContent = '';
+      for (let i = 0; i < n; i++) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Photo ' + (i + 1));
+        b.addEventListener('click', () => go(i * step()));
+        dots.appendChild(b);
+      }
+      dots.hidden = n < 2;
+    };
+    const sync = () => {
+      const i = Math.min(pages - 1, Math.round(car.scrollLeft / step()));
+      [...dots.children].forEach((d, k) => d.setAttribute('aria-current', k === i ? 'true' : 'false'));
+      prev.disabled = car.scrollLeft <= 4;
+      next.disabled = car.scrollLeft >= car.scrollWidth - car.clientWidth - 4;
+    };
+    prev.addEventListener('click', () => go(car.scrollLeft - step()));
+    next.addEventListener('click', () => go(car.scrollLeft + step()));
+    car.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+    car.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); }
+    });
+    addEventListener('resize', () => { build(); sync(); });
+    build();
+    sync();
+  }
 
   // Questions : ouverture en douceur
   $$('.faq details').forEach(d => {
